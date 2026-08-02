@@ -104,6 +104,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
           <button class="tpl-btn active" data-tpl="modern">Modern</button>
           <button class="tpl-btn" data-tpl="classic">Classic</button>
           <button class="tpl-btn" data-tpl="minimal">Minimal</button>
+          <button class="tpl-btn" data-tpl="corporate">Corporate</button>
         </div>
       </div>
 
@@ -116,6 +117,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
           <div class="field"><label>Company</label><input id="f-company" type="text" value="Granite River Labs"></div>
           <div class="field"><label>Email</label><input id="f-email" type="email" value="rahul.umesh@graniteriverlabs.com"></div>
           <div class="field"><label>Phone</label><input id="f-phone" type="tel" value="+91 98765 43210"></div>
+          <div class="field"><label>Mobile</label><input id="f-mobile" type="tel" placeholder="+01 513 312 3974"></div>
           <div class="field"><label>Website</label><input id="f-web" type="text" value="graniteriverlabs.com"></div>
           <div class="field"><label>LinkedIn URL</label><input id="f-linkedin" type="text" value="linkedin.com/in/rahulumesh"></div>
           <div class="field full"><label>Office address (optional)</label><input id="f-address" type="text" value="Bengaluru, India"></div>
@@ -174,7 +176,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
 <script>
 (function() {
   var $ = function(id) { return document.getElementById(id); };
-  var fields = ['name','title','dept','company','email','phone','web','linkedin','address','photo','color'];
+  var fields = ['name','title','dept','company','email','phone','mobile','web','linkedin','address','photo','color'];
   var inputs = {};
   fields.forEach(function(f) { inputs[f] = $('f-' + f); });
   var STORAGE_KEY = 'grl-esig-v1';
@@ -206,12 +208,11 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
     if (d.web) parts.push('<a href="' + esc(url(d.web)) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.web) + '</a>');
     if (d.linkedin) parts.push('<a href="' + esc(url(d.linkedin)) + '" style="color:' + esc(d.color) + '; text-decoration:none;">LinkedIn</a>');
     return '<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#222; line-height:1.5;"><tr>' + photo +
-      '<td style="border-left:3px solid ' + esc(d.color) + '; padding-left:14px; vertical-align:top;">' +
-      '<div style="font-size:16px; font-weight:bold; color:#111;">' + esc(d.name) + '</div>' +
+      '<td style="vertical-align:top;">' +
+      '<div style="font-size:16px; font-weight:bold; color:' + esc(d.color) + ';">' + esc(d.name) + '</div>' +
       '<div style="font-size:13px; color:#555; margin-top:2px;">' + esc(d.title) + (d.dept ? ' &middot; ' + esc(d.dept) : '') + '</div>' +
       '<div style="font-size:13px; font-weight:bold; color:' + esc(d.color) + '; margin-top:6px;">' + esc(d.company) + '</div>' +
       (d.address ? '<div style="font-size:12px; color:#777; margin-top:2px;">' + esc(d.address) + '</div>' : '') +
-      '<div style="font-size:12px; color:#444; margin-top:8px;">' + parts.join(' &nbsp;&middot;&nbsp; ') + '</div>' +
       '</td></tr></table>';
   }
 
@@ -244,11 +245,34 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
       '<div style="color:' + esc(d.color) + '; font-size:12px; margin-top:4px;">' + parts.join(' &middot; ') + '</div></div>';
   }
 
+  function renderCorporate(d) {
+    var lines = [];
+    lines.push('<div style="font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#222; line-height:1.6;">');
+    lines.push('<div style="color:#555; margin-bottom:10px;">Regards,</div>');
+    // Name block
+    lines.push('<div style="font-weight:bold; color:#111;">' + esc(d.name) + '</div>');
+    if (d.dept) lines.push('<div style="color:#444;">' + esc(d.dept) + '</div>');
+    if (d.title) lines.push('<div style="color:#444;">' + esc(d.title) + '</div>');
+    // Company & address block
+    lines.push('<br>');
+    if (d.company) lines.push('<div style="font-weight:bold; color:#111;">' + esc(d.company) + '</div>');
+    if (d.address) lines.push('<div style="color:#444;">' + esc(d.address) + '</div>');
+    // Phone block
+    lines.push('<br>');
+    if (d.phone) lines.push('<div style="color:#444;">Phone: ' + esc(d.phone) + '</div>');
+    if (d.mobile) lines.push('<div style="color:#444;">Mobile: ' + esc(d.mobile) + '</div>');
+    if (d.email) lines.push('<div style="margin-top:4px;"><a href="mailto:' + esc(d.email) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.email) + '</a></div>');
+    if (d.web) lines.push('<div><a href="' + esc(url(d.web)) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.web) + '</a></div>');
+    lines.push('</div>');
+    return lines.join('');
+  }
+
   function render() {
     var d = getData();
     var html;
     if (currentTpl === 'modern') html = renderModern(d);
     else if (currentTpl === 'classic') html = renderClassic(d);
+    else if (currentTpl === 'corporate') html = renderCorporate(d);
     else html = renderMinimal(d);
     preview.innerHTML = html;
     preview.dataset.html = html;
