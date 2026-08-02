@@ -50,13 +50,13 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
 .field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 .field.full { grid-column: 1 / -1; }
 .field label { font-size: 12px; font-weight: 500; color: var(--text-2); }
-.field input[type=text], .field input[type=email], .field input[type=tel] {
+.field input[type=text], .field input[type=email], .field input[type=tel], .field select {
   width: 100%; padding: 9px 11px; font-size: 13px; font-family: inherit; color: var(--text);
   background: var(--surface-2); border: 0.5px solid var(--border); border-radius: var(--radius);
   transition: border-color 0.15s, box-shadow 0.15s; outline: none;
 }
-.field input:hover { border-color: var(--border-strong); }
-.field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
+.field input:hover, .field select:hover { border-color: var(--border-strong); }
+.field input:focus, .field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
 .tpl-row { display: flex; gap: 8px; flex-wrap: wrap; }
 .tpl-btn { padding: 9px 16px; border: 0.5px solid var(--border-strong); background: var(--surface); color: var(--text); border-radius: var(--radius); cursor: pointer; font-size: 13px; font-weight: 500; font-family: inherit; transition: all 0.15s; }
 .tpl-btn:hover { background: var(--surface-2); }
@@ -120,7 +120,18 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
           <div class="field"><label>Mobile</label><input id="f-mobile" type="tel" placeholder="+01 513 312 3974"></div>
           <div class="field"><label>Website</label><input id="f-web" type="text" value="graniteriverlabs.com"></div>
           <div class="field"><label>LinkedIn URL</label><input id="f-linkedin" type="text" value="linkedin.com/in/rahulumesh"></div>
-          <div class="field full"><label>Office address (optional)</label><input id="f-address" type="text" value="Bengaluru, India"></div>
+          <div class="field full">
+            <label>Location (optional)</label>
+            <select id="f-address">
+              <option value="">None</option>
+              <option value="Granite River Labs Inc. Headquarters&#10;3000 Lakeside Drive,&#10;Santa Clara, CA 95054-2810 USA&#10;Main Phone: +1 (408) 406-5299">Granite River Labs Inc. Headquarters (Santa Clara, USA)</option>
+              <option value="Granite River Labs GmbH&#10;Technology Park Karlsruhe, Building 7G&#10;2nd Floor, Albert-Nestler-Str. 15&#10;D-76131 Karlsruhe, Germany&#10;Main Phone: +49 721 61052311">Granite River Labs GmbH (Karlsruhe, Germany)</option>
+              <option value="Granite River Labs Belgium BV&#10;Rootenstraat 25 - PO Box 11; 3600 Genk, Belgium&#10;Main Phone: +32(0)479798491">Granite River Labs Belgium BV (Genk, Belgium)</option>
+              <option value="Granite River Labs Asia Pacific Pte. Ltd., Taiwan Branch&#10;5F No. 489, Sec. 2, Tiding Blvd.,&#10;Neihu Dist. Taipei City 11493, Taiwan&#10;Main Phone: +886 (2) 2657-2199">Granite River Labs Asia Pacific (Taipei, Taiwan)</option>
+              <option value="Granite River Labs Japan Ltd.&#10;6F Urbancenter Shin-Yokohama,&#10;2-2-8 Shin-Yokohama, Kohoku-ku&#10;Yokohama 222-0033 Japan">Granite River Labs Japan Ltd. (Yokohama, Japan)</option>
+              <option value="Granite River Labs India Services Private Limited&#10;Unit No. 10, 1st Floor, ROACH ICON (RBD Icon),&#10;Survey No. 28 &amp; 36/5, Outer Ring Road,&#10;Doddanekundi, K R Puram Hobli,&#10;Bengaluru 560037, India" selected>Granite River Labs India Services Pvt. Ltd. (Bengaluru, India)</option>
+            </select>
+          </div>
           <div class="field full">
             <label>Photo (upload or paste URL)</label>
             <div class="photo-row">
@@ -199,6 +210,12 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
     if (/^https?:\/\//i.test(u) || /^data:/i.test(u)) return u;
     return 'https://' + u;
   }
+  function addressLines(a, style) {
+    if (!a) return '';
+    return a.split('\n').map(function(line) {
+      return '<div style="' + style + '">' + esc(line) + '</div>';
+    }).join('');
+  }
 
   function renderModern(d) {
     var photo = d.photo ? '<td style="padding-right:16px; vertical-align:top;"><img src="' + esc(d.photo) + '" alt="" width="72" height="72" style="border-radius:50%; display:block; border:0;"></td>' : '';
@@ -212,7 +229,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
       '<div style="font-size:16px; font-weight:bold; color:' + esc(d.color) + ';">' + esc(d.name) + '</div>' +
       '<div style="font-size:13px; color:#555; margin-top:2px;">' + esc(d.title) + (d.dept ? ' &middot; ' + esc(d.dept) : '') + '</div>' +
       '<div style="font-size:13px; font-weight:bold; color:' + esc(d.color) + '; margin-top:6px;">' + esc(d.company) + '</div>' +
-      (d.address ? '<div style="font-size:12px; color:#777; margin-top:2px;">' + esc(d.address) + '</div>' : '') +
+      addressLines(d.address, 'font-size:12px; color:#777; margin-top:2px;') +
       '</td></tr></table>';
   }
 
@@ -225,7 +242,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
     if (d.email) add('Email', '<a href="mailto:' + esc(d.email) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.email) + '</a>');
     if (d.web) add('Web', '<a href="' + esc(url(d.web)) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.web) + '</a>');
     if (d.linkedin) add('LinkedIn', '<a href="' + esc(url(d.linkedin)) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.linkedin) + '</a>');
-    if (d.address) add('Office', esc(d.address));
+    if (d.address) add('Office', d.address.split('\n').map(esc).join('<br>'));
     return '<table cellpadding="0" cellspacing="0" border="0" style="font-family:Georgia,\'Times New Roman\',serif; font-size:13px; color:#222; line-height:1.5;">' +
       '<tr><td style="padding-bottom:6px; border-bottom:1px solid #ddd;">' +
       '<div style="font-size:15px; font-weight:bold; color:#111;">' + esc(d.name) + '</div>' +
@@ -256,7 +273,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
     // Company & address block
     lines.push('<br>');
     if (d.company) lines.push('<div style="font-weight:bold; color:#111;">' + esc(d.company) + '</div>');
-    if (d.address) lines.push('<div style="color:#444;">' + esc(d.address) + '</div>');
+    lines.push(addressLines(d.address, 'color:#444;'));
     // Phone block
     lines.push('<br>');
     if (d.phone) lines.push('<div style="color:#444;">Phone: ' + esc(d.phone) + '</div>');
@@ -317,7 +334,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); f
   }
 
   // Wire up inputs
-  fields.forEach(function(f) { inputs[f].addEventListener('input', render); });
+  fields.forEach(function(f) { inputs[f].addEventListener('input', render); inputs[f].addEventListener('change', render); });
 
   // Template buttons
   var tplBtns = document.querySelectorAll('#tpl-row button');
