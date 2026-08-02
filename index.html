@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email signature creator — Granite River Labs</title>
+<style>
+:root {
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --surface-2: #f5f4ef;
+  --border: #e5e3dc;
+  --border-strong: #d4d1c7;
+  --text: #1a1a1a;
+  --text-2: #6b6b66;
+  --text-3: #999891;
+  --accent: #1D9E75;
+  --accent-hover: #187a5c;
+  --accent-bg: rgba(29,158,117,0.08);
+  --danger: #c93a3a;
+  --success: #1D9E75;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17171a;
+    --surface: #22222a;
+    --surface-2: #1c1c22;
+    --border: #33333a;
+    --border-strong: #44444a;
+    --text: #e8e8e0;
+    --text-2: #a8a8a0;
+    --text-3: #6b6b66;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", system-ui, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+.page { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+.header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
+.header h1 { font-size: 22px; font-weight: 500; margin: 0; letter-spacing: -0.01em; }
+.header p { font-size: 13px; color: var(--text-2); margin: 4px 0 0; }
+.badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 5px 12px; background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 999px; color: var(--text-2); }
+.grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 20px 22px; }
+.card + .card { margin-top: 16px; }
+.card-title { font-size: 11px; font-weight: 500; color: var(--text-2); margin: 0 0 14px; text-transform: uppercase; letter-spacing: 0.08em; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; }
+.field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-size: 12px; font-weight: 500; color: var(--text-2); }
+.field input[type=text], .field input[type=email], .field input[type=tel] {
+  width: 100%; padding: 9px 11px; font-size: 13px; font-family: inherit; color: var(--text);
+  background: var(--surface-2); border: 0.5px solid var(--border); border-radius: var(--radius);
+  transition: border-color 0.15s, box-shadow 0.15s; outline: none;
+}
+.field input:hover { border-color: var(--border-strong); }
+.field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
+.tpl-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.tpl-btn { padding: 9px 16px; border: 0.5px solid var(--border-strong); background: var(--surface); color: var(--text); border-radius: var(--radius); cursor: pointer; font-size: 13px; font-weight: 500; font-family: inherit; transition: all 0.15s; }
+.tpl-btn:hover { background: var(--surface-2); }
+.tpl-btn.active { border: 2px solid var(--accent); background: var(--accent-bg); color: var(--accent); padding: 8px 15px; }
+.color-row { display: flex; align-items: center; gap: 12px; }
+.color-row input[type=color] { width: 44px; height: 36px; padding: 2px; border: 0.5px solid var(--border); border-radius: 6px; background: transparent; cursor: pointer; }
+.color-row code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--text-2); }
+.preview-frame { background: #ffffff; border: 0.5px solid var(--border); border-radius: var(--radius); padding: 24px; min-height: 140px; overflow-x: auto; }
+.preview-hint { font-size: 11px; color: var(--text-3); margin: 10px 0 0; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.btn { padding: 9px 14px; border-radius: var(--radius); font-size: 13px; font-weight: 500; font-family: inherit; cursor: pointer; transition: all 0.15s; border: 0.5px solid var(--border-strong); background: var(--surface); color: var(--text); }
+.btn:hover { background: var(--surface-2); }
+.btn-primary { background: var(--accent); color: #ffffff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn-ghost { border-color: transparent; color: var(--text-2); }
+.btn-ghost:hover { background: var(--surface-2); color: var(--text); }
+.toast { font-size: 12px; min-height: 18px; margin-top: 10px; padding: 0 4px; transition: opacity 0.2s; }
+.toast.success { color: var(--success); }
+.toast.error { color: var(--danger); }
+.photo-row { display: flex; gap: 6px; align-items: stretch; }
+.photo-row input[type=text] { flex: 1; }
+.photo-btn-small { padding: 0 12px; border: 0.5px solid var(--border-strong); background: var(--surface-2); border-radius: var(--radius); font-size: 12px; font-family: inherit; color: var(--text-2); cursor: pointer; white-space: nowrap; }
+.photo-btn-small:hover { background: var(--border); color: var(--text); }
+.info { font-size: 12px; color: var(--text); line-height: 1.6; padding: 12px 14px; background: var(--surface-2); border-radius: var(--radius); border-left: 3px solid var(--accent); }
+.info strong { color: var(--text); font-weight: 500; }
+.footer-note { margin-top: 40px; padding-top: 20px; border-top: 0.5px solid var(--border); font-size: 12px; color: var(--text-3); }
+.footer-note code { font-family: ui-monospace, "SF Mono", Menlo, monospace; background: var(--surface-2); padding: 1px 6px; border-radius: 4px; font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div>
+      <h1>Email signature creator</h1>
+      <p>Generate a consistent email signature for your Granite River Labs account.</p>
+    </div>
+    <span class="badge">Internal tool</span>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="card">
+        <p class="card-title">Template</p>
+        <div class="tpl-row" id="tpl-row">
+          <button class="tpl-btn active" data-tpl="modern">Modern</button>
+          <button class="tpl-btn" data-tpl="classic">Classic</button>
+          <button class="tpl-btn" data-tpl="minimal">Minimal</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Your details</p>
+        <div class="form-grid">
+          <div class="field"><label>Full name</label><input id="f-name" type="text" value="Rahul Umesh"></div>
+          <div class="field"><label>Job title</label><input id="f-title" type="text" value="Business Intelligence Lead"></div>
+          <div class="field"><label>Department</label><input id="f-dept" type="text" value="Sales Operations"></div>
+          <div class="field"><label>Company</label><input id="f-company" type="text" value="Granite River Labs"></div>
+          <div class="field"><label>Email</label><input id="f-email" type="email" value="rahul.umesh@graniteriverlabs.com"></div>
+          <div class="field"><label>Phone</label><input id="f-phone" type="tel" value="+91 98765 43210"></div>
+          <div class="field"><label>Website</label><input id="f-web" type="text" value="graniteriverlabs.com"></div>
+          <div class="field"><label>LinkedIn URL</label><input id="f-linkedin" type="text" value="linkedin.com/in/rahulumesh"></div>
+          <div class="field full"><label>Office address (optional)</label><input id="f-address" type="text" value="Bengaluru, India"></div>
+          <div class="field full">
+            <label>Photo (upload or paste URL)</label>
+            <div class="photo-row">
+              <input id="f-photo" type="text" placeholder="https://example.com/photo.jpg">
+              <input id="f-photo-file" type="file" accept="image/*" style="display:none;">
+              <button type="button" class="photo-btn-small" id="btn-photo-upload">Upload</button>
+              <button type="button" class="photo-btn-small" id="btn-photo-clear">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Brand color</p>
+        <div class="color-row">
+          <input type="color" id="f-color" value="#1D9E75">
+          <code id="color-hex">#1D9E75</code>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <p class="card-title">Live preview</p>
+        <div class="preview-frame" id="preview"></div>
+        <p class="preview-hint">This is how your signature will appear in email clients that render HTML.</p>
+        <div class="actions">
+          <button class="btn btn-primary" id="btn-copy-rich">Copy signature</button>
+          <button class="btn" id="btn-copy-html">Copy HTML source</button>
+          <button class="btn" id="btn-download">Download .html</button>
+          <button class="btn btn-ghost" id="btn-reset">Reset</button>
+        </div>
+        <div class="toast" id="toast"></div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">How to install</p>
+        <div class="info">
+          <strong>Outlook desktop:</strong> File &rarr; Options &rarr; Mail &rarr; Signatures. Create new, paste the copied signature.<br>
+          <strong>Outlook web:</strong> Settings &rarr; Mail &rarr; Compose and reply &rarr; Email signature.<br>
+          <strong>Gmail:</strong> Settings &rarr; See all settings &rarr; General &rarr; Signature.<br>
+          <strong>Apple Mail:</strong> Mail &rarr; Settings &rarr; Signatures. Uncheck "Always match my default message font" first.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Granite River Labs internal tool. Your details are saved to <code>localStorage</code> in your browser only, and never sent to a server.
+  </div>
+</div>
+
+<script>
+(function() {
+  var $ = function(id) { return document.getElementById(id); };
+  var fields = ['name','title','dept','company','email','phone','web','linkedin','address','photo','color'];
+  var inputs = {};
+  fields.forEach(function(f) { inputs[f] = $('f-' + f); });
+  var STORAGE_KEY = 'grl-esig-v1';
+  var currentTpl = 'modern';
+  var preview = $('preview');
+  var toast = $('toast');
+
+  function getData() {
+    var d = {};
+    fields.forEach(function(f) { d[f] = (inputs[f].value || '').trim(); });
+    return d;
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function url(u) {
+    if (!u) return '';
+    if (/^https?:\/\//i.test(u) || /^data:/i.test(u)) return u;
+    return 'https://' + u;
+  }
+
+  function renderModern(d) {
+    var photo = d.photo ? '<td style="padding-right:16px; vertical-align:top;"><img src="' + esc(d.photo) + '" alt="" width="72" height="72" style="border-radius:50%; display:block; border:0;"></td>' : '';
+    var parts = [];
+    if (d.phone) parts.push(esc(d.phone));
+    if (d.email) parts.push('<a href="mailto:' + esc(d.email) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.email) + '</a>');
+    if (d.web) parts.push('<a href="' + esc(url(d.web)) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.web) + '</a>');
+    if (d.linkedin) parts.push('<a href="' + esc(url(d.linkedin)) + '" style="color:' + esc(d.color) + '; text-decoration:none;">LinkedIn</a>');
+    return '<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#222; line-height:1.5;"><tr>' + photo +
+      '<td style="border-left:3px solid ' + esc(d.color) + '; padding-left:14px; vertical-align:top;">' +
+      '<div style="font-size:16px; font-weight:bold; color:#111;">' + esc(d.name) + '</div>' +
+      '<div style="font-size:13px; color:#555; margin-top:2px;">' + esc(d.title) + (d.dept ? ' &middot; ' + esc(d.dept) : '') + '</div>' +
+      '<div style="font-size:13px; font-weight:bold; color:' + esc(d.color) + '; margin-top:6px;">' + esc(d.company) + '</div>' +
+      (d.address ? '<div style="font-size:12px; color:#777; margin-top:2px;">' + esc(d.address) + '</div>' : '') +
+      '<div style="font-size:12px; color:#444; margin-top:8px;">' + parts.join(' &nbsp;&middot;&nbsp; ') + '</div>' +
+      '</td></tr></table>';
+  }
+
+  function renderClassic(d) {
+    var rows = [];
+    function add(label, val) {
+      rows.push('<tr><td style="padding:2px 12px 2px 0; color:#888; font-size:12px;">' + label + '</td><td style="padding:2px 0; font-size:12px;">' + val + '</td></tr>');
+    }
+    if (d.phone) add('Phone', esc(d.phone));
+    if (d.email) add('Email', '<a href="mailto:' + esc(d.email) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.email) + '</a>');
+    if (d.web) add('Web', '<a href="' + esc(url(d.web)) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.web) + '</a>');
+    if (d.linkedin) add('LinkedIn', '<a href="' + esc(url(d.linkedin)) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.linkedin) + '</a>');
+    if (d.address) add('Office', esc(d.address));
+    return '<table cellpadding="0" cellspacing="0" border="0" style="font-family:Georgia,\'Times New Roman\',serif; font-size:13px; color:#222; line-height:1.5;">' +
+      '<tr><td style="padding-bottom:6px; border-bottom:1px solid #ddd;">' +
+      '<div style="font-size:15px; font-weight:bold; color:#111;">' + esc(d.name) + '</div>' +
+      '<div style="font-size:12px; color:#666; font-style:italic;">' + esc(d.title) + (d.dept ? ', ' + esc(d.dept) : '') + '</div>' +
+      '<div style="font-size:13px; color:' + esc(d.color) + '; margin-top:2px; font-weight:bold;">' + esc(d.company) + '</div>' +
+      '</td></tr><tr><td style="padding-top:8px;"><table cellpadding="0" cellspacing="0" border="0">' + rows.join('') + '</table></td></tr></table>';
+  }
+
+  function renderMinimal(d) {
+    var parts = [];
+    if (d.email) parts.push('<a href="mailto:' + esc(d.email) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.email) + '</a>');
+    if (d.phone) parts.push(esc(d.phone));
+    if (d.web) parts.push('<a href="' + esc(url(d.web)) + '" style="color:' + esc(d.color) + '; text-decoration:none;">' + esc(d.web) + '</a>');
+    return '<div style="font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#222; line-height:1.5;">' +
+      '<div style="font-weight:bold; color:#111;">' + esc(d.name) + '</div>' +
+      '<div style="color:#666; font-size:12px;">' + esc(d.title) + (d.company ? ' &middot; ' + esc(d.company) : '') + '</div>' +
+      '<div style="color:' + esc(d.color) + '; font-size:12px; margin-top:4px;">' + parts.join(' &middot; ') + '</div></div>';
+  }
+
+  function render() {
+    var d = getData();
+    var html;
+    if (currentTpl === 'modern') html = renderModern(d);
+    else if (currentTpl === 'classic') html = renderClassic(d);
+    else html = renderMinimal(d);
+    preview.innerHTML = html;
+    preview.dataset.html = html;
+    $('color-hex').textContent = (d.color || '').toUpperCase();
+    save();
+  }
+
+  function save() {
+    try {
+      var d = getData();
+      d._tpl = currentTpl;
+      // Only save if photo is not a huge data URL
+      if (d.photo && d.photo.length > 100000) d.photo = '';
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+    } catch (e) {}
+  }
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      var d = JSON.parse(raw);
+      fields.forEach(function(f) { if (d[f] != null) inputs[f].value = d[f]; });
+      if (d._tpl) {
+        currentTpl = d._tpl;
+        var btns = document.querySelectorAll('#tpl-row button');
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].classList.toggle('active', btns[i].dataset.tpl === currentTpl);
+        }
+      }
+    } catch (e) {}
+  }
+
+  function tellToast(msg, kind) {
+    toast.textContent = msg;
+    toast.className = 'toast ' + (kind || '');
+    clearTimeout(tellToast._t);
+    tellToast._t = setTimeout(function() {
+      toast.textContent = '';
+      toast.className = 'toast';
+    }, 3200);
+  }
+
+  // Wire up inputs
+  fields.forEach(function(f) { inputs[f].addEventListener('input', render); });
+
+  // Template buttons
+  var tplBtns = document.querySelectorAll('#tpl-row button');
+  for (var i = 0; i < tplBtns.length; i++) {
+    tplBtns[i].addEventListener('click', function() {
+      for (var j = 0; j < tplBtns.length; j++) tplBtns[j].classList.remove('active');
+      this.classList.add('active');
+      currentTpl = this.dataset.tpl;
+      render();
+    });
+  }
+
+  // Photo upload
+  $('btn-photo-upload').addEventListener('click', function() {
+    $('f-photo-file').click();
+  });
+  $('f-photo-file').addEventListener('change', function(e) {
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    if (file.size > 500 * 1024) {
+      tellToast('Photo is over 500KB. Please use a smaller image or paste a URL.', 'error');
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      inputs.photo.value = ev.target.result;
+      render();
+      tellToast('Photo loaded.', 'success');
+    };
+    reader.readAsDataURL(file);
+  });
+  $('btn-photo-clear').addEventListener('click', function() {
+    inputs.photo.value = '';
+    $('f-photo-file').value = '';
+    render();
+  });
+
+  // Copy rich signature
+  $('btn-copy-rich').addEventListener('click', async function() {
+    var html = preview.dataset.html;
+    var text = preview.innerText;
+    try {
+      if (navigator.clipboard && window.ClipboardItem) {
+        await navigator.clipboard.write([new ClipboardItem({
+          'text/html': new Blob([html], {type: 'text/html'}),
+          'text/plain': new Blob([text], {type: 'text/plain'})
+        })]);
+      } else {
+        await navigator.clipboard.writeText(text);
+      }
+      tellToast('Signature copied. Paste it into your email client.', 'success');
+    } catch (e) {
+      tellToast('Copy failed. Try "Copy HTML source" instead.', 'error');
+    }
+  });
+
+  // Copy HTML source
+  $('btn-copy-html').addEventListener('click', function() {
+    navigator.clipboard.writeText(preview.dataset.html).then(function() {
+      tellToast('HTML source copied to clipboard.', 'success');
+    }, function() {
+      tellToast('Copy failed.', 'error');
+    });
+  });
+
+  // Download HTML
+  $('btn-download').addEventListener('click', function() {
+    var d = getData();
+    var html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Email signature - ' + esc(d.name) + '</title></head><body>' + preview.dataset.html + '</body></html>';
+    var blob = new Blob([html], {type: 'text/html'});
+    var link = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = link;
+    a.download = 'signature-' + (d.name || 'user').toLowerCase().replace(/\s+/g,'-') + '.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(link);
+    tellToast('signature.html downloaded.', 'success');
+  });
+
+  // Reset
+  $('btn-reset').addEventListener('click', function() {
+    if (!confirm('Reset all fields to defaults?')) return;
+    try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+    location.reload();
+  });
+
+  load();
+  render();
+})();
+</script>
+</body>
+</html>
