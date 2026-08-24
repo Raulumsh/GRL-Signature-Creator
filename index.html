@@ -231,7 +231,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   var OFFICES = {
     'santa-clara': {
       label: 'Santa Clara',
-      company: 'Granite River Labs Inc.',
+      company: '<b>Granite River Labs Inc.</b>',
       lines: ['3000 Lakeside Drive,', 'Santa Clara, CA 95054-2810 USA'],
       localLines: [],
       phone: '+1 (408) 406-5299',
@@ -239,7 +239,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     },
     'taiwan': {
       label: 'Taiwan',
-      company: 'Granite River Labs Asia Pacific Pte. Ltd., Taiwan Branch',
+      company: '<b>Granite River Labs Asia Pacific Pte. Ltd., Taiwan Branch</b>',
       lines: ['5F., No. 489, Sec. 2, Tiding Blvd., Neihu Dist., Taipei City 11493, Taiwan'],
       localLines: ['\u65B0\u52A0\u5761\u5546\u6280\u6D41\u5275\u65B0\u6709\u9650\u516C\u53F8\u53F0\u7063\u5206\u516C\u53F8', '11493 \u53F0\u5317\u5E02\u5167\u6E56\u5340\u5824\u9802\u5927\u9053\u4E8C\u6BB5489\u865F5F'],
       phone: '',
@@ -510,7 +510,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     var a = document.createElement('a');
     a.href = link;
     a.download = 'signature-'+(d.name || 'user').toLowerCase().replace(/\s+/g,'-')+'.html';
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);  
     URL.revokeObjectURL(link);
     tellToast('Signature downloaded.', 'success');
   });
