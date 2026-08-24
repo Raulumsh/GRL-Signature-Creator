@@ -231,7 +231,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   var OFFICES = {
     'santa-clara': {
       label: 'Santa Clara',
-      company: '<b>Granite River Labs Inc.</b>',
+      company: 'Granite River Labs Inc.',
       lines: ['3000 Lakeside Drive,', 'Santa Clara, CA 95054-2810 USA'],
       localLines: [],
       phone: '+1 (408) 406-5299',
@@ -239,9 +239,10 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     },
     'taiwan': {
       label: 'Taiwan',
-      company: '<b>Granite River Labs Asia Pacific Pte. Ltd., Taiwan Branch</b>',
+      company: 'Granite River Labs Asia Pacific Pte. Ltd., Taiwan Branch',
+      localCompany: '\u65B0\u52A0\u5761\u5546\u6280\u6D41\u5275\u65B0\u6709\u9650\u516C\u53F8\u53F0\u7063\u5206\u516C\u53F8',
       lines: ['5F., No. 489, Sec. 2, Tiding Blvd., Neihu Dist., Taipei City 11493, Taiwan'],
-      localLines: ['\u65B0\u52A0\u5761\u5546\u6280\u6D41\u5275\u65B0\u6709\u9650\u516C\u53F8\u53F0\u7063\u5206\u516C\u53F8', '11493 \u53F0\u5317\u5E02\u5167\u6E56\u5340\u5824\u9802\u5927\u9053\u4E8C\u6BB5489\u865F5F'],
+      localLines: ['11493 \u53F0\u5317\u5E02\u5167\u6E56\u5340\u5824\u9802\u5927\u9053\u4E8C\u6BB5489\u865F5F'],
       phone: '',
       links: 'graniteriverlabs.com/zh-tw/   \u2022   linkedin.com/graniteriverlabs'
     },
@@ -312,7 +313,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   function updateLocPreview() {
     var loc = OFFICES[locSelect.value];
     if (!loc) { locPreview.textContent = ''; return; }
-    var lines = [loc.company];
+    var lines = [];
+    if (loc.localCompany) lines.push(loc.localCompany);
+    lines.push(loc.company);
     loc.localLines.forEach(function(l) { lines.push(l); });
     loc.lines.forEach(function(l) { lines.push(l); });
     if (loc.phone) lines.push('Main Phone: ' + loc.phone);
@@ -366,12 +369,14 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     h += '</td>';
     h += '<td style="vertical-align:top; font-size:8pt; color:'+GRL_BLUE+'; line-height:1.45;">';
     h += '<div style="font-weight:bold; font-size:9pt; margin-bottom:2px;">GRL</div>';
-    // Local language lines
+    // Local company name (bold)
+    if (loc.localCompany) h += '<div style="font-weight:bold;">'+esc(loc.localCompany)+'</div>';
+    // Company name (bold)
+    h += '<div style="font-weight:bold;">'+esc(loc.company)+'</div>';
+    // Local address lines
     loc.localLines.forEach(function(line) {
       h += '<div>'+esc(line)+'</div>';
     });
-    // Company name
-    h += '<div>'+esc(loc.company)+'</div>';
     // Address lines
     loc.lines.forEach(function(line) {
       h += '<div>'+esc(line)+'</div>';
@@ -510,7 +515,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     var a = document.createElement('a');
     a.href = link;
     a.download = 'signature-'+(d.name || 'user').toLowerCase().replace(/\s+/g,'-')+'.html';
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);  
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(link);
     tellToast('Signature downloaded.', 'success');
   });
