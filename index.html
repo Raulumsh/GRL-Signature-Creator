@@ -239,6 +239,30 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
           <strong>Tip:</strong> Set signatures to auto-attach to every new email, reply, and forward.
         </div>
       </div>
+
+      <div class="card sec-grl-card-only">
+        <p class="card-title">Print specifications (CMYK)</p>
+        <div class="guidelines">
+          <p style="font-weight:600; color:var(--text); margin-bottom:4px;">Card dimensions</p>
+          <ul style="margin-bottom:10px;">
+            <li>3.5 &times; 2 in (89 &times; 51 mm), 300 DPI</li>
+            <li>0.125 in (3.175 mm) bleed with trim marks</li>
+            <li>Full color, double-sided (4/4)</li>
+          </ul>
+          <p style="font-weight:600; color:var(--text); margin-bottom:4px;">CMYK color values</p>
+          <ul style="margin-bottom:10px;">
+            <li><span style="display:inline-block; width:10px; height:10px; background:#031b61; border-radius:2px; vertical-align:-1px; margin-right:4px;"></span> Navy — C:97 M:89 Y:24 K:12</li>
+            <li><span style="display:inline-block; width:10px; height:10px; background:#e74c3c; border-radius:2px; vertical-align:-1px; margin-right:4px;"></span> Red accent — C:0 M:82 Y:76 K:9</li>
+            <li><span style="display:inline-block; width:10px; height:10px; background:#FF6600; border-radius:2px; vertical-align:-1px; margin-right:4px;"></span> SGS Orange — C:0 M:60 Y:100 K:0</li>
+            <li><span style="display:inline-block; width:10px; height:10px; background:#24B5D8; border-radius:2px; vertical-align:-1px; margin-right:4px;"></span> Cyan traces — C:65 M:0 Y:10 K:0</li>
+          </ul>
+          <p style="font-weight:600; color:var(--text); margin-bottom:4px;">Recommended stock</p>
+          <ul>
+            <li>350gsm coated, matte or silk finish</li>
+            <li>Soft-touch matte lamination</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -672,7 +696,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     printWin.document.close();
   });
 
-  // Download business card as PDF
+  // Download business card as PDF (print-ready, CMYK-safe)
   $('btn-download-pdf').addEventListener('click', async function() {
     var btn = $('btn-download-pdf');
     btn.textContent = 'Generating PDF...';
@@ -680,28 +704,126 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     try {
       var d = getData();
       var jsPDF = window.jspdf.jsPDF;
-      // Business card: 3.5 x 2 inches = 252 x 144 pt
-      var pdf = new jsPDF({ orientation: 'landscape', unit: 'in', format: [3.5, 2] });
 
-      // Render front card - get the two card divs with border-radius
+      // Standard business card: 3.5 x 2 inches
+      // Add 0.125in bleed on each side for print = 3.75 x 2.25
+      var BLEED = 0.125;
+      var CARD_W = 3.5;
+      var CARD_H = 2;
+      var PDF_W = CARD_W + (BLEED * 2);
+      var PDF_H = CARD_H + (BLEED * 2);
+
+      var pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'in',
+        format: [PDF_W, PDF_H],
+        compress: true
+      });
+
+      // Set PDF metadata for print
+      pdf.setProperties({
+        title: 'GRL Business Card - ' + (d.name || 'Employee'),
+        subject: 'Print-ready business card with bleed marks',
+        author: 'Granite River Labs',
+        creator: 'GRL Signature & Card Creator'
+      });
+
+      // Render at 4x scale (~300 DPI at card size)
+      var renderOpts = { scale: 4, useCORS: true, backgroundColor: null, logging: false };
+
       var cards = preview.querySelectorAll('div[style*="border-radius:8px"]');
       var cardFront = cards[0] || null;
       var cardBack = cards[1] || null;
 
       if (cardFront) {
-        var canvas1 = await html2canvas(cardFront, { scale: 3, useCORS: true, backgroundColor: null, logging: false });
+        var canvas1 = await html2canvas(cardFront, renderOpts);
         var img1 = canvas1.toDataURL('image/png');
-        pdf.addImage(img1, 'PNG', 0, 0, 3.5, 2);
-      }
-      if (cardBack) {
-        pdf.addPage([3.5, 2], 'landscape');
-        var canvas2 = await html2canvas(cardBack, { scale: 3, useCORS: true, backgroundColor: null, logging: false });
-        var img2 = canvas2.toDataURL('image/png');
-        pdf.addImage(img2, 'PNG', 0, 0, 3.5, 2);
+        pdf.addImage(img1, 'PNG', BLEED, BLEED, CARD_W, CARD_H);
+        // Draw trim marks (thin grey lines at corners)
+        pdf.setDrawColor(128, 128, 128);
+        pdf.setLineWidth(0.003);
+        // Top-left
+        pdf.line(BLEED, 0, BLEED, BLEED * 0.7);
+        pdf.line(0, BLEED, BLEED * 0.7, BLEED);
+        // Top-right
+        pdf.line(BLEED + CARD_W, 0, BLEED + CARD_W, BLEED * 0.7);
+        pdf.line(BLEED + CARD_W + BLEED * 0.3, BLEED, PDF_W, BLEED);
+        // Bottom-left
+        pdf.line(BLEED, BLEED + CARD_H + BLEED * 0.3, BLEED, PDF_H);
+        pdf.line(0, BLEED + CARD_H, BLEED * 0.7, BLEED + CARD_H);
+        // Bottom-right
+        pdf.line(BLEED + CARD_W, BLEED + CARD_H + BLEED * 0.3, BLEED + CARD_W, PDF_H);
+        pdf.line(BLEED + CARD_W + BLEED * 0.3, BLEED + CARD_H, PDF_W, BLEED + CARD_H);
       }
 
+      if (cardBack) {
+        pdf.addPage([PDF_W, PDF_H], 'landscape');
+        var canvas2 = await html2canvas(cardBack, renderOpts);
+        var img2 = canvas2.toDataURL('image/png');
+        pdf.addImage(img2, 'PNG', BLEED, BLEED, CARD_W, CARD_H);
+        // Trim marks (same as front)
+        pdf.setDrawColor(128, 128, 128);
+        pdf.setLineWidth(0.003);
+        pdf.line(BLEED, 0, BLEED, BLEED * 0.7);
+        pdf.line(0, BLEED, BLEED * 0.7, BLEED);
+        pdf.line(BLEED + CARD_W, 0, BLEED + CARD_W, BLEED * 0.7);
+        pdf.line(BLEED + CARD_W + BLEED * 0.3, BLEED, PDF_W, BLEED);
+        pdf.line(BLEED, BLEED + CARD_H + BLEED * 0.3, BLEED, PDF_H);
+        pdf.line(0, BLEED + CARD_H, BLEED * 0.7, BLEED + CARD_H);
+        pdf.line(BLEED + CARD_W, BLEED + CARD_H + BLEED * 0.3, BLEED + CARD_W, PDF_H);
+        pdf.line(BLEED + CARD_W + BLEED * 0.3, BLEED + CARD_H, PDF_W, BLEED + CARD_H);
+      }
+
+      // Page 3: Print specifications
+      pdf.addPage('a4', 'portrait');
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(16);
+      pdf.setTextColor(3, 27, 97);
+      pdf.text('GRL Business Card — Print Specifications', 0.8, 1);
+
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(10);
+      pdf.setTextColor(50, 50, 50);
+      var y = 1.5;
+      var specs = [
+        ['Card size:', '3.5 × 2 inches (89 × 51 mm) — standard US business card'],
+        ['Bleed:', '0.125 inches (3.175 mm) on all sides'],
+        ['Resolution:', '300 DPI (rendered at 4× scale)'],
+        ['Corners:', '8px radius (rounded)'],
+        ['', ''],
+        ['CMYK Color Values:', ''],
+        ['Navy (background/text):', 'C:97  M:89  Y:24  K:12   (RGB #031B61)'],
+        ['White (text on dark):', 'C:0   M:0   Y:0   K:0    (RGB #FFFFFF)'],
+        ['Red accent bar:', 'C:0   M:82  Y:76  K:9    (RGB #E74C3C)'],
+        ['SGS Orange:', 'C:0   M:60  Y:100 K:0    (RGB #FF6600)'],
+        ['Grey (title on light):', 'C:0   M:0   Y:0   K:67   (RGB #555555)'],
+        ['Light BG circuit traces:', 'C:8   M:2   Y:2   K:0    (RGB #D6EBF2)'],
+        ['Cyan circuit traces:', 'C:65  M:0   Y:10  K:0    (RGB #24B5D8)'],
+        ['', ''],
+        ['Paper stock:', 'Recommended 350gsm coated, matte or silk finish'],
+        ['Printing:', 'Full color, double-sided (4/4)'],
+        ['Finish:', 'Soft-touch matte lamination recommended'],
+        ['', ''],
+        ['Note:', 'Convert RGB to CMYK using your print provider\'s ICC profile'],
+        ['', 'for the most accurate color reproduction. The CMYK values above'],
+        ['', 'are approximate and may vary by press and paper stock.'],
+      ];
+
+      specs.forEach(function(row) {
+        if (row[0] === '' && row[1] === '') { y += 0.15; return; }
+        if (row[0].indexOf('CMYK') > -1 || row[0] === 'Note:') {
+          pdf.setFont('helvetica', 'bold');
+          pdf.setTextColor(3, 27, 97);
+        }
+        pdf.text(row[0], 0.8, y);
+        pdf.setFont('helvetica', 'normal');
+        pdf.setTextColor(50, 50, 50);
+        pdf.text(row[1], 2.8, y);
+        y += 0.22;
+      });
+
       pdf.save('business-card-' + (d.name || 'grl').toLowerCase().replace(/\s+/g, '-') + '.pdf');
-      tellToast('PDF downloaded.', 'success');
+      tellToast('Print-ready PDF downloaded (with bleed, trim marks & CMYK specs).', 'success');
     } catch (e) {
       console.error(e);
       tellToast('PDF generation failed. Try Print instead.', 'error');
