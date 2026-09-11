@@ -148,8 +148,8 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
               <option value="germany">Germany</option>
               <option value="belgium">Belgium</option>
               <option value="japan">Japan</option>
-              <option value="india">India</option>
               <option value="korea">Korea</option>
+              <option value="india">India</option>
             </select>
           </div>
         </div>
@@ -348,10 +348,11 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     'korea': {
       label: 'Korea',
       company: 'Granite River Labs Asia Pacific Pte. Ltd. Korea Branch',
-      lines: ['#908~913, BT Center,56 Songdogwahak-ro,Yeonsu-gu, Incheon, 21984 <br></br><a href="https://naver.me/xR0G6Xek">인천시 연수구 송도과학로 56 BT센터 9층 908-913호</a>'],
-      localLines: [],
-      phone: '+91 80-2990 0533',
+      lines: ['#908~913, BT Center,', '56 Songdogwahak-ro,', 'Yeonsu-gu, Incheon, 21984'],
+      localLines: ['\uC778\uCC9C\uC2DC \uC5F0\uC218\uAD6C \uC1A1\uB3C4\uACFC\uD559\uB85C 56 BT\uC13C\uD130 9\uCE35 908-913\uD638'],
+      phone: '',
       links: 'graniteriverlabs.com   \u2022   linkedin.com/graniteriverlabs'
+    }
   };
 
   var $ = function(id) { return document.getElementById(id); };
