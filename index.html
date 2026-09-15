@@ -86,8 +86,8 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
 <div class="page">
   <div class="header">
     <div>
-      <h1>Email Signature Creator</h1>
-      <p>Generate compliant email signatures for GRL with the new logo.</p>
+      <h1>Email Signature &amp; Business Card Creator</h1>
+      <p>Generate compliant email signatures and business cards for SGS and GRL.</p>
     </div>
     <span class="badge">Internal tool</span>
   </div>
@@ -320,7 +320,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     'germany': {
       label: 'Germany',
       company: 'Granite River Labs GmbH',
-      localCompany: '',
+      localCompany: 'Granite River Labs GmbH',
       lines: ['Technology Park Karlsruhe, Building 7G', '2nd Floor, Albert-Nestler-Str. 15', 'D-76131 Karlsruhe, Germany'],
       localLines: ['Technologiepark Karlsruhe, 7G', 'zweiter Stock, Albert-Nestler-Str. 15', 'D-76131 Karlsruhe, Deutschland'],
       phone: '+49 721 61052311',
@@ -329,9 +329,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     'belgium': {
       label: 'Belgium',
       company: 'Granite River Labs Belgium BV',
-      localCompany: '',
+      localCompany: 'Granite River Labs Belgium BV',
       lines: ['Rootenstraat 25 - PO Box 11; 3600 Genk, Belgium'],
-      localLines: [],
+      localLines: ['Rootenstraat 25 - PO Box 11; 3600 Genk, Belgium'],
       phone: '+32 (0) 479 798 491',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
@@ -339,7 +339,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       label: 'Japan',
       company: 'Granite River Labs Japan Ltd.',
       localCompany: '日本、横浜・ラボ',
-      lines: ['6F Urbancenter Shin-Yokohama, 2-2-8 Shin-Yokohama, Kohoku-ku Yokohama 222-0033 Japan'],
+      lines: [],
       localLines: ['〒222-0033 神奈川県横浜市港北区新横浜 2-2-8 アーバンセンター新横浜6階'],
       phone: '+81 45-470-0030',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
@@ -356,9 +356,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     'india': {
       label: 'India',
       company: 'Granite River Labs India Services Private Limited',
-      localCompany: '',
+      localCompany: 'Granite River Labs India Services Private Limited',
       lines: ['Unit No. 10, 1st Floor, ROACH ICON (RBD Icon),', 'Survey No. 28 & 36/5, Outer Ring Road,', 'Doddanekundi, K R Puram Hobli,', 'Bengaluru 560037, India'],
-      localLines: [''],
+      localLines: ['Unit No. 10, 1st Floor, ROACH ICON (RBD Icon),', 'Survey No. 28 & 36/5, Outer Ring Road,', 'Doddanekundi, K R Puram Hobli,', 'Bengaluru 560037, India'],
       phone: '+91 80-2990 0533',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     }
@@ -400,15 +400,12 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (!loc) { locPreview.textContent = ''; return; }
     var lines = [];
     if (langMode === 'local') {
-      if (loc.localCompany) lines.push(loc.localCompany);
-      lines.push(loc.company);
-      loc.localLines.forEach(function(l) { lines.push(l); });
-      loc.lines.forEach(function(l) { lines.push(l); });
+      lines.push(loc.localCompany || loc.company);
+      var aLines = loc.localLines.length ? loc.localLines : loc.lines;
+      aLines.forEach(function(l) { lines.push(l); });
     } else {
       lines.push(loc.company);
-      if (loc.localCompany) lines.push(loc.localCompany);
       loc.lines.forEach(function(l) { lines.push(l); });
-      loc.localLines.forEach(function(l) { lines.push(l); });
     }
     if (loc.phone) lines.push('Main Phone: ' + loc.phone);
     locPreview.textContent = lines.join('\n');
@@ -463,17 +460,15 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     h += '</td>';
     h += '<td style="vertical-align:top; font-size:8pt; color:'+GRL_BLUE+'; line-height:1.45;">';
     if (langMode === 'local') {
-      // Local language first
-      if (loc.localCompany) h += '<div style="font-weight:bold;">'+esc(loc.localCompany)+'</div>';
-      h += '<div style="font-weight:bold;">'+esc(loc.company)+'</div>';
-      loc.localLines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
-      loc.lines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
+      // Local language only — fall back to English if no local version
+      var cName = loc.localCompany || loc.company;
+      h += '<div style="font-weight:bold;">'+esc(cName)+'</div>';
+      var aLines = loc.localLines.length ? loc.localLines : loc.lines;
+      aLines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
     } else {
-      // English first
+      // English only
       h += '<div style="font-weight:bold;">'+esc(loc.company)+'</div>';
-      if (loc.localCompany) h += '<div style="font-weight:bold;">'+esc(loc.localCompany)+'</div>';
       loc.lines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
-      loc.localLines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
     }
     // Main phone from office data
     if (loc.phone) h += '<div style="margin-top:4px;">Main Phone: <a href="tel:'+esc(loc.phone.replace(/[\s()]/g,''))+'" style="color:'+GRL_BLUE+'; text-decoration:none;">'+esc(loc.phone)+'</a></div>';
