@@ -107,9 +107,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       <div class="card">
         <p class="card-title">Your details</p>
         <div class="form-grid">
-          <div class="field full"><label>Full name</label><input id="f-name" type="text" placeholder="Full Name"></div>
+          <div class="field full"><label>Full name</label><input id="f-name" type="text" placeholder="Anne Tsou"></div>
           <div class="field full sec-grl sec-grl-card"><label>Job title</label><input id="f-grl-title" type="text" placeholder="Senior Engineer"></div>
-          <div class="field sec-sgs"><label>Business unit</label><input id="f-bu" type="text" placeholder="Services"></div>
+          <div class="field sec-sgs"><label>Business unit</label><input id="f-bu" type="text" placeholder="Agricultural Services"></div>
           <div class="field full sec-sgs"><label>Job title</label><input id="f-jobtitle" type="text" placeholder="Senior Inspector"></div>
         </div>
       </div>
@@ -456,9 +456,10 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     h += '<div style="background:'+GRL_BG+'; padding:14px 16px; border-radius:4px;">';
     h += '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>';
     h += '<td style="vertical-align:middle; padding-right:14px; width:80px;">';
-    h += '<img src="'+GRL_LOGO_B64+'" alt="GRL" width="110" style="display:block; border:0;">';
+    h += '<img src="https://graniteriverlabs.com/hubfs/GRL%20logo_By%20SGS%20-%20RGB%20(1).png" alt="GRL" width="109" style="display:block; border:0;">';
     h += '</td>';
     h += '<td style="vertical-align:top; font-size:8pt; color:'+GRL_BLUE+'; line-height:1.45;">';
+    h += '<div style="font-weight:bold; font-size:9pt; margin-bottom:2px;">GRL</div>';
     if (langMode === 'local') {
       // Local language only — fall back to English if no local version
       var cName = loc.localCompany || loc.company;
