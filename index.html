@@ -539,10 +539,14 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     var CH = 240;
     var cs = 'width:'+CW+'px; height:'+CH+'px; border-radius:8px; overflow:hidden; position:relative; font-family:Arial,Helvetica,sans-serif; box-shadow:0 3px 16px rgba(0,0,0,0.12);';
 
-    // Build address lines
+    // Build address lines (respect language toggle)
     var addrLines = [];
-    loc.localLines.forEach(function(l) { addrLines.push(l); });
-    loc.lines.forEach(function(l) { addrLines.push(l); });
+    if (langMode === 'local') {
+      var aLines = loc.localLines.length ? loc.localLines : loc.lines;
+      aLines.forEach(function(l) { addrLines.push(l); });
+    } else {
+      loc.lines.forEach(function(l) { addrLines.push(l); });
+    }
 
     // ── FRONT (dark navy) ──
     var f = '<div style="'+cs+' background:'+NAVY+'; border:1.5px solid #0a2a6e;">';
