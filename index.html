@@ -562,14 +562,14 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     // Bottom: contact left, address right
     f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
     // Left: phone + email
-    f += '<div style="font-size:8pt; color:#ffffff; line-height:1.6; white-space:nowrap;">';
+    f += '<div style="font-size:6.4pt; color:#ffffff; line-height:1.6; white-space:nowrap;">';
     if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
     if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
     if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
     f += '</div>';
     // Right: address (left-aligned text)
     if (addrLines.length) {
-      f += '<div style="font-size:7pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:left; max-width:180px;">';
+      f += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:left; max-width:180px;">';
       addrLines.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
       f += '</div>';
     }
@@ -594,14 +594,14 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     // Bottom: contact left, address right
     b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
     // Left: phone + email
-    b += '<div style="font-size:8pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap;">';
+    b += '<div style="font-size:6.4pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap;">';
     if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
     if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
     if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
     b += '</div>';
     // Right: address (left-aligned text)
     if (addrLines.length) {
-      b += '<div style="font-size:7pt; color:#666; line-height:1.5; text-align:left; max-width:180px;">';
+      b += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:left; max-width:180px;">';
       addrLines.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
       b += '</div>';
     }
