@@ -131,6 +131,11 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
           <div class="field full"><label>Email</label><input id="f-grl-email" type="email" placeholder="anne.tsou@graniteriverlabs.com"></div>
           <div class="field full"><label>Website</label><input id="f-grl-website" type="text" value="graniteriverlabs.com"></div>
         </div>
+        <p class="card-title" style="margin-top:16px;">Back side — Local language</p>
+        <div class="form-grid">
+          <div class="field full"><label>Name (local language) <span class="opt">— leave blank to use English</span></label><input id="f-grl-name-local" type="text" placeholder="e.g. 鄒安妮"></div>
+          <div class="field full"><label>Job title (local language) <span class="opt">— leave blank to use English</span></label><input id="f-grl-title-local" type="text" placeholder="e.g. 資深工程師"></div>
+        </div>
       </div>
 
       <!-- GRL: Office location dropdown -->
@@ -339,7 +344,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       label: 'Japan',
       company: 'Granite River Labs Japan Ltd.',
       localCompany: '日本、横浜・ラボ',
-      lines: ['6F Urbancenter Shin-Yokohama, 2-2-8 Shin-Yokohama, Kohoku-ku, Yokohama 222-0033 Japan'],
+      lines: ['6F Urbancenter Shin-Yokohama, 2-2-8 Shin-Yokohama, Kohoku-ku Yokohama 222-0033 Japan'],
       localLines: ['〒222-0033 神奈川県横浜市港北区新横浜 2-2-8 アーバンセンター新横浜6階'],
       phone: '+81 45-470-0030',
       links: 'graniteriverlabs.com/ja-jp/   •   linkedin.com/graniteriverlabs'
@@ -351,7 +356,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       lines: ['#908~913, BT Center,', '56 Songdogwahak-ro,', 'Yeonsu-gu, Incheon, 21984'],
       localLines: ['인천광역시 연수구 송도과학로 56', 'BT센터 9층 908~913호 (우편번호 21984)'],
       phone: '',
-      links: 'graniteriverlabs.com/ko-kr/  •   linkedin.com/graniteriverlabs'
+      links: 'graniteriverlabs.com/ko-kr/   •   linkedin.com/graniteriverlabs'
     },
     'india': {
       label: 'India',
@@ -374,7 +379,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   var langMode = 'en'; // 'en' or 'local'
 
   var inputIds = ['name','bu','jobtitle','company','addr1','addr2','phone','mobile','fax','email','regulatory',
-                  'grl-office','grl-mobile','grl-links','grl-designation','grl-email','grl-website','grl-title'];
+                  'grl-office','grl-mobile','grl-links','grl-designation','grl-email','grl-website','grl-title','grl-name-local','grl-title-local'];
   var inputs = {};
   inputIds.forEach(function(f) { inputs[f] = $('f-' + f); });
 
@@ -586,11 +591,13 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
     b += '<img src="'+CARD_QR+'" alt="QR" width="68" height="68" style="display:block; border:0; border-radius:4px;">';
     b += '</div>';
-    // Name + Title (same as entered — user's name stays the same)
+    // Name + Title (local language, fall back to English)
+    var backName = d['grl-name-local'] || d.name;
+    var backTitle = d['grl-title-local'] || d['grl-designation'];
     b += '<div>';
     b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:2px; border-radius:1px;"></div>';
-    b += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
-    if (d['grl-designation']) b += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
+    b += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(backName)+'</div>';
+    if (backTitle) b += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(backTitle)+'</div>';
     b += '</div>';
     // Bottom: contact left, local language address right
     b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
