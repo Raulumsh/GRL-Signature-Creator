@@ -98,7 +98,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
         <p class="card-title">Signature type</p>
         <div class="tpl-row" id="tpl-row">
           <button class="tpl-btn active" data-tpl="grl">GRL</button>
-          <button class="tpl-btn" data-tpl="grl-card" style="display:none;">GRL — Business Card</button>
+          <button class="tpl-btn" data-tpl="grl-card">GRL — Business Card</button>
           <button class="tpl-btn" data-tpl="sgs-new" style="display:none;">SGS — New email</button>
           <button class="tpl-btn" data-tpl="sgs-reply" style="display:none;">SGS — Reply / Fwd</button>
         </div>
@@ -124,7 +124,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       </div>
 
       <!-- GRL Business Card: extra fields -->
-      <div class="card sec-grl-card-only" style="display:none;">
+      <div class="card sec-grl-card-only" >
         <p class="card-title">Business card details</p>
         <div class="form-grid">
           <div class="field full"><label>Job title / Designation</label><input id="f-grl-designation" type="text" placeholder="Director of Engineering"></div>
@@ -244,7 +244,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
         </div>
       </div>
 
-      <div class="card sec-grl-card-only" style="display:none;">
+      <div class="card sec-grl-card-only">
         <p class="card-title">Print specifications (CMYK)</p>
         <div class="guidelines">
           <p style="font-weight:600; color:var(--text); margin-bottom:4px;">Card dimensions</p>
@@ -511,8 +511,8 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     $('btn-copy-rich').style.display = isGrlCard ? 'none' : '';
     $('btn-copy-html').style.display = isGrlCard ? 'none' : '';
     $('btn-download').style.display = isGrlCard ? 'none' : '';
-    $('btn-download-pdf').style.display = 'none';
-    $('btn-print').style.display = 'none';
+    $('btn-download-pdf').style.display = isGrlCard ? '' : 'none';
+    $('btn-print').style.display = isGrlCard ? '' : 'none';
     var root = document.documentElement;
     if (isAnyGrl) {
       root.style.setProperty('--accent', '#031b61');
