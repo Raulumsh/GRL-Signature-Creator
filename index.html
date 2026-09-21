@@ -306,7 +306,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       lines: ['Room 103, B2, No.700 Yishan Rd, Xuhui District, Shanghai, China, 200233'],
       localLines: ['200233上海市徐汇区宜山路700号B2座103室'],
       phone: '',
-      links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
+      links: 'graniteriverlabs.com.cn   •   linkedin.com/graniteriverlabs'
     },
     'dongguan': {
       label: 'Dongguan',
@@ -315,7 +315,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       lines: ['Room 2001, Level 20, Building A, No. 5 Keji 2nd Rd., Songshan Lake, Dongguan City China 523808'],
       localLines: ['广东省东莞市松山湖园区科技二路5号A座2001室'],
       phone: '',
-      links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
+      links: 'graniteriverlabs.com.cn   •   linkedin.com/graniteriverlabs'
     },
     'germany': {
       label: 'Germany',
@@ -324,7 +324,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       lines: ['Technology Park Karlsruhe, Building 7G', '2nd Floor, Albert-Nestler-Str. 15', 'D-76131 Karlsruhe, Germany'],
       localLines: ['Technologiepark Karlsruhe, 7G', 'zweiter Stock, Albert-Nestler-Str. 15', 'D-76131 Karlsruhe, Deutschland'],
       phone: '+49 721 61052311',
-      links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
+      links: 'graniteriverlabs.com/de-de/   •   linkedin.com/graniteriverlabs'
     },
     'belgium': {
       label: 'Belgium',
@@ -339,10 +339,10 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       label: 'Japan',
       company: 'Granite River Labs Japan Ltd.',
       localCompany: '日本、横浜・ラボ',
-      lines: [],
+      lines: ['6F Urbancenter Shin-Yokohama, 2-2-8 Shin-Yokohama, Kohoku-ku, Yokohama 222-0033 Japan'],
       localLines: ['〒222-0033 神奈川県横浜市港北区新横浜 2-2-8 アーバンセンター新横浜6階'],
       phone: '+81 45-470-0030',
-      links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
+      links: 'graniteriverlabs.com/ja-jp/   •   linkedin.com/graniteriverlabs'
     },
     'korea': {
       label: 'Korea',
@@ -351,7 +351,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       lines: ['#908~913, BT Center,', '56 Songdogwahak-ro,', 'Yeonsu-gu, Incheon, 21984'],
       localLines: ['인천광역시 연수구 송도과학로 56', 'BT센터 9층 908~913호 (우편번호 21984)'],
       phone: '',
-      links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
+      links: 'graniteriverlabs.com/ko-kr/  •   linkedin.com/graniteriverlabs'
     },
     'india': {
       label: 'India',
@@ -539,74 +539,70 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     var CH = 240;
     var cs = 'width:'+CW+'px; height:'+CH+'px; border-radius:8px; overflow:hidden; position:relative; font-family:Arial,Helvetica,sans-serif; box-shadow:0 3px 16px rgba(0,0,0,0.12);';
 
-    // Build address lines (respect language toggle)
-    var addrLines = [];
-    if (langMode === 'local') {
-      var aLines = loc.localLines.length ? loc.localLines : loc.lines;
-      aLines.forEach(function(l) { addrLines.push(l); });
-    } else {
-      loc.lines.forEach(function(l) { addrLines.push(l); });
-    }
+    // English address lines (for front)
+    var enAddr = loc.lines.length ? loc.lines : loc.localLines;
+    // Local address lines (for back) — fall back to English
+    var localAddr = loc.localLines.length ? loc.localLines : loc.lines;
+    // Local company name (for back) — fall back to English
+    var localCompanyName = loc.localCompany || loc.company;
 
-    // ── FRONT (dark navy) ──
-    var f = '<div style="'+cs+' background:'+NAVY+'; border:1.5px solid #0a2a6e;">';
-    f += '<img src="'+CARD_CIRCUIT_DARK+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.5; pointer-events:none;">';
+    // ── FRONT (white — English) ──
+    var f = '<div style="'+cs+' background:#ffffff; border:1.5px solid #d0d0d0;">';
+    f += '<img src="'+CARD_CIRCUIT_LIGHT+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.6; pointer-events:none;">';
     f += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
     // Top row: logo left, QR right
     f += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
-    f += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
+    f += '<img src="'+CARD_LOGO_DARK+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
     f += '<img src="'+CARD_QR+'" alt="QR" width="68" height="68" style="display:block; border:0; border-radius:4px;">';
     f += '</div>';
-    // Name + Title
+    // Name + Title (English)
     f += '<div>';
     f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:2px; border-radius:1px;"></div>';
-    f += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
-    if (d['grl-designation']) f += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
+    f += '<div style="font-size:16pt; font-weight:bold; color:'+NAVY+'; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
+    if (d['grl-designation']) f += '<div style="font-size:9pt; color:#555; margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
     f += '</div>';
-    // Bottom: contact left, address right
+    // Bottom: contact left, English address right
     f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
-    // Left: phone + email
-    f += '<div style="font-size:6.4pt; color:#ffffff; line-height:1.6; white-space:nowrap;">';
+    f += '<div style="font-size:6.4pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap;">';
     if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
     if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
     if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
     f += '</div>';
-    // Right: address (left-aligned text)
-    if (addrLines.length) {
-      f += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:left; max-width:180px;">';
-      addrLines.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
+    if (enAddr.length) {
+      f += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:left; max-width:180px;">';
+      f += '<div style="font-weight:bold;">'+esc(loc.company)+'</div>';
+      enAddr.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
       f += '</div>';
     }
     f += '</div>';
     f += '</div></div>';
 
-    // ── BACK (white) ──
-    var b = '<div style="'+cs+' background:#ffffff; border:1.5px solid #d0d0d0;">';
-    b += '<img src="'+CARD_CIRCUIT_LIGHT+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.6; pointer-events:none;">';
+    // ── BACK (dark navy — Local language) ──
+    var b = '<div style="'+cs+' background:'+NAVY+'; border:1.5px solid #0a2a6e;">';
+    b += '<img src="'+CARD_CIRCUIT_DARK+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.5; pointer-events:none;">';
     b += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
     // Top row: logo left, QR right
     b += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
-    b += '<img src="'+CARD_LOGO_DARK+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
+    b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
     b += '<img src="'+CARD_QR+'" alt="QR" width="68" height="68" style="display:block; border:0; border-radius:4px;">';
     b += '</div>';
-    // Name + Title
+    // Name + Title (same as entered — user's name stays the same)
     b += '<div>';
     b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:2px; border-radius:1px;"></div>';
-    b += '<div style="font-size:16pt; font-weight:bold; color:'+NAVY+'; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
-    if (d['grl-designation']) b += '<div style="font-size:9pt; color:#555; margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
+    b += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
+    if (d['grl-designation']) b += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
     b += '</div>';
-    // Bottom: contact left, address right
+    // Bottom: contact left, local language address right
     b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
-    // Left: phone + email
-    b += '<div style="font-size:6.4pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap;">';
+    b += '<div style="font-size:6.4pt; color:#ffffff; line-height:1.6; white-space:nowrap;">';
     if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
     if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
     if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
     b += '</div>';
-    // Right: address (left-aligned text)
-    if (addrLines.length) {
-      b += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:left; max-width:180px;">';
-      addrLines.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
+    if (localAddr.length) {
+      b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:left; max-width:180px;">';
+      b += '<div style="font-weight:bold;">'+esc(localCompanyName)+'</div>';
+      localAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
       b += '</div>';
     }
     b += '</div>';
