@@ -129,6 +129,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
         <div class="form-grid">
           <div class="field full"><label>Job title / Designation</label><input id="f-grl-designation" type="text" placeholder="Director of Engineering"></div>
           <div class="field full"><label>Email</label><input id="f-grl-email" type="email" placeholder="anne.tsou@graniteriverlabs.com"></div>
+          <div class="field full"><label>Additional email <span class="opt">(optional)</span></label><input id="f-grl-email2" type="email" placeholder="anne.tsou@sgs.com"></div>
           <div class="field full"><label>Website</label><input id="f-grl-website" type="text" value="graniteriverlabs.com"></div>
         </div>
         <p class="card-title" style="margin-top:16px;">Back side — Local language</p>
@@ -311,7 +312,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       lines: ['Room 103, B2, No.700 Yishan Rd, Xuhui District, Shanghai, China, 200233'],
       localLines: ['200233上海市徐汇区宜山路700号B2座103室'],
       phone: '',
-      links: 'graniteriverlabs.com.cn   •   linkedin.com/graniteriverlabs'
+      links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
     'dongguan': {
       label: 'Dongguan',
@@ -320,7 +321,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       lines: ['Room 2001, Level 20, Building A, No. 5 Keji 2nd Rd., Songshan Lake, Dongguan City China 523808'],
       localLines: ['广东省东莞市松山湖园区科技二路5号A座2001室'],
       phone: '',
-      links: 'graniteriverlabs.com.cn   •   linkedin.com/graniteriverlabs'
+      links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
     'germany': {
       label: 'Germany',
@@ -329,7 +330,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       lines: ['Technology Park Karlsruhe, Building 7G', '2nd Floor, Albert-Nestler-Str. 15', 'D-76131 Karlsruhe, Germany'],
       localLines: ['Technologiepark Karlsruhe, 7G', 'zweiter Stock, Albert-Nestler-Str. 15', 'D-76131 Karlsruhe, Deutschland'],
       phone: '+49 721 61052311',
-      links: 'graniteriverlabs.com/de-de/   •   linkedin.com/graniteriverlabs'
+      links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
     'belgium': {
       label: 'Belgium',
@@ -344,10 +345,10 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       label: 'Japan',
       company: 'Granite River Labs Japan Ltd.',
       localCompany: '日本、横浜・ラボ',
-      lines: ['6F Urbancenter Shin-Yokohama, 2-2-8 Shin-Yokohama, Kohoku-ku Yokohama 222-0033 Japan'],
+      lines: [],
       localLines: ['〒222-0033 神奈川県横浜市港北区新横浜 2-2-8 アーバンセンター新横浜6階'],
       phone: '+81 45-470-0030',
-      links: 'graniteriverlabs.com/ja-jp/   •   linkedin.com/graniteriverlabs'
+      links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
     'korea': {
       label: 'Korea',
@@ -356,7 +357,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       lines: ['#908~913, BT Center,', '56 Songdogwahak-ro,', 'Yeonsu-gu, Incheon, 21984'],
       localLines: ['인천광역시 연수구 송도과학로 56', 'BT센터 9층 908~913호 (우편번호 21984)'],
       phone: '',
-      links: 'graniteriverlabs.com/ko-kr/   •   linkedin.com/graniteriverlabs'
+      links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
     'india': {
       label: 'India',
@@ -379,7 +380,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   var langMode = 'en'; // 'en' or 'local'
 
   var inputIds = ['name','bu','jobtitle','company','addr1','addr2','phone','mobile','fax','email','regulatory',
-                  'grl-office','grl-mobile','grl-links','grl-designation','grl-email','grl-website','grl-title','grl-name-local','grl-title-local'];
+                  'grl-office','grl-mobile','grl-links','grl-designation','grl-email','grl-email2','grl-website','grl-title','grl-name-local','grl-title-local'];
   var inputs = {};
   inputIds.forEach(function(f) { inputs[f] = $('f-' + f); });
 
@@ -562,7 +563,6 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     f += '</div>';
     // Name + Title (English)
     f += '<div>';
-    f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:2px; border-radius:1px;"></div>';
     f += '<div style="font-size:16pt; font-weight:bold; color:'+NAVY+'; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
     if (d['grl-designation']) f += '<div style="font-size:9pt; color:#555; margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
     f += '</div>';
@@ -572,9 +572,11 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
     if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
     if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
+    if (d['grl-email2']) f += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
     f += '</div>';
     if (enAddr.length) {
-      f += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:left; max-width:180px;">';
+      f += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; max-width:180px;">';
+      f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
       f += '<div style="font-weight:bold;">'+esc(loc.company)+'</div>';
       enAddr.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
       f += '</div>';
@@ -595,7 +597,6 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     var backName = d['grl-name-local'] || d.name;
     var backTitle = d['grl-title-local'] || d['grl-designation'];
     b += '<div>';
-    b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:2px; border-radius:1px;"></div>';
     b += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(backName)+'</div>';
     if (backTitle) b += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(backTitle)+'</div>';
     b += '</div>';
@@ -605,9 +606,11 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
     if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
     if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
+    if (d['grl-email2']) b += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
     b += '</div>';
     if (localAddr.length) {
-      b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:left; max-width:180px;">';
+      b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; max-width:180px;">';
+      b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
       b += '<div style="font-weight:bold;">'+esc(localCompanyName)+'</div>';
       localAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
       b += '</div>';
