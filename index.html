@@ -345,7 +345,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       label: 'Japan',
       company: 'Granite River Labs Japan Ltd.',
       localCompany: '日本、横浜・ラボ',
-      lines: [],
+      lines: ['Granite River Labs Japan Ltd. 6F Urbancenter Shin-Yokohama,2-2-8 Shin-Yokohama, Kohoku-ku Yokohama 222-0033 Japan'],
       localLines: ['〒222-0033 神奈川県横浜市港北区新横浜 2-2-8 アーバンセンター新横浜6階'],
       phone: '+81 45-470-0030',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
@@ -465,7 +465,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     h += '<img src="https://graniteriverlabs.com/hubfs/GRL%20logo_By%20SGS%20-%20RGB%20(1).png" alt="GRL" width="109" style="display:block; border:0;">';
     h += '</td>';
     h += '<td style="vertical-align:top; font-size:8pt; color:'+GRL_BLUE+'; line-height:1.45;">';
-    h += '<div style="font-weight:bold; font-size:9pt; margin-bottom:2px;">GRL</div>';
+    
     if (langMode === 'local') {
       // Local language only — fall back to English if no local version
       var cName = loc.localCompany || loc.company;
