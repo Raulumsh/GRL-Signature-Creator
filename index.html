@@ -98,7 +98,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
         <p class="card-title">Signature type</p>
         <div class="tpl-row" id="tpl-row">
           <button class="tpl-btn active" data-tpl="grl">GRL</button>
-          <button class="tpl-btn" data-tpl="grl-card">GRL — Business Card</button>
+          <button class="tpl-btn" data-tpl="grl-card" id="btn-card-tab" style="display:none;">GRL — Business Card</button>
           <button class="tpl-btn" data-tpl="sgs-new" style="display:none;">SGS — New email</button>
           <button class="tpl-btn" data-tpl="sgs-reply" style="display:none;">SGS — Reply / Fwd</button>
         </div>
@@ -245,8 +245,11 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
         <div class="info">
           <strong>Outlook desktop:</strong> File &rarr; Options &rarr; Mail &rarr; Signatures. Create new, paste.<br>
           <strong>Outlook web:</strong> Settings &rarr; Mail &rarr; Compose and reply &rarr; Email signature.<br>
-          <strong>Gmail:</strong> Settings &rarr; See all settings &rarr; General &rarr; Signature.<br>
-          <strong>Tip:</strong> Set signatures to auto-attach to every new email, reply, and forward.
+          <strong>Outlook mobile (iOS/Android):</strong> Settings &rarr; tap your account &rarr; Signature &rarr; paste the copied signature.<br>
+          <strong>Gmail desktop:</strong> Settings &rarr; See all settings &rarr; General &rarr; Signature.<br>
+          <strong>Gmail mobile:</strong> Settings &rarr; your account &rarr; Mobile signature &rarr; paste.<br>
+          <strong>Apple Mail (iPhone):</strong> Settings &rarr; Mail &rarr; Signature &rarr; paste.<br>
+          <strong>Tip:</strong> Use "Copy signature" to paste the rich version. If images don't appear, ensure your email client is set to HTML format, not plain text.
         </div>
       </div>
 
@@ -345,8 +348,8 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       label: 'Japan',
       company: 'Granite River Labs Japan Ltd.',
       localCompany: '日本、横浜・ラボ',
-      lines: ['6F Urbancenter Shin-Yokohama,2-2-8 Shin-Yokohama, Kohoku-ku Yokohama 222-0033 Japan'],
-      localLines: ['〒222-0033 神奈川県横浜市港北区新横浜 2-2-8 アーバンセンター新横浜6階'],
+      lines: ['6F Urbancenter Shin-Yokohama,', '2-2-8 Shin-Yokohama, Kohoku-ku', 'Yokohama 222-0033 Japan'],
+      localLines: ['\u3012222-0033 \u795E\u5948\u5DDD\u770C\u6A2A\u6D5C\u5E02\u6E2F\u5317\u533A\u65B0\u6A2A\u6D5C 2-2-8 \u30A2\u30FC\u30D0\u30F3\u30BB\u30F3\u30BF\u30FC\u65B0\u6A2A\u6D5C6\u968E'],
       phone: '+81 45-470-0030',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
@@ -373,6 +376,12 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   var $ = function(id) { return document.getElementById(id); };
   var STORAGE_KEY = 'sig-creator-v4';
   var currentTpl = 'grl';
+
+  // Show business card tab if URL contains ?mode=card
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('mode') === 'card') {
+    $('btn-card-tab').style.display = '';
+  }
   var preview = $('preview');
   var toast = $('toast');
   var locSelect = $('f-grl-location');
@@ -411,7 +420,8 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       aLines.forEach(function(l) { lines.push(l); });
     } else {
       lines.push(loc.company);
-      loc.lines.forEach(function(l) { lines.push(l); });
+      var aLines = loc.lines.length ? loc.lines : loc.localLines;
+      aLines.forEach(function(l) { lines.push(l); });
     }
     if (loc.phone) lines.push('Main Phone: ' + loc.phone);
     locPreview.textContent = lines.join('\n');
@@ -448,9 +458,12 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   }
 
   // ── GRL ──
+  var GRL_LOGO_URL = 'https://graniteriverlabs.com/hubfs/GRL-logo-By-SGS-RGB.png';
+
   function renderGrl(d) {
     var loc = OFFICES[d['grl-location']] || OFFICES['taiwan'];
-    var h = '<div style="font-family:Arial,Helvetica,sans-serif;">';
+    // Outer wrapper - max-width for mobile
+    var h = '<div style="font-family:Arial,Helvetica,sans-serif; max-width:600px;">';
     // Name
     h += '<div style="font-size:11pt; font-weight:bold; color:'+GRL_BLUE+';">'+esc(d.name)+'</div>';
     // Job title
@@ -460,22 +473,20 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     h += '<br>';
     // Company block with background
     h += '<div style="background:'+GRL_BG+'; padding:14px 16px; border-radius:4px;">';
-    h += '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>';
-    h += '<td style="vertical-align:middle; padding-right:14px; width:80px;">';
-    h += '<img src="https://graniteriverlabs.com/hubfs/GRL%20logo_By%20SGS%20-%20RGB%20(1).png" alt="GRL" width="109" style="display:block; border:0;">';
+    h += '<table cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:100%;"><tr>';
+    h += '<td style="vertical-align:middle; padding-right:14px; width:115px;">';
+    h += '<img src="'+GRL_LOGO_URL+'" alt="GRL by SGS" width="109" style="display:block; border:0; max-width:100%; height:auto;">';
     h += '</td>';
     h += '<td style="vertical-align:top; font-size:8pt; color:'+GRL_BLUE+'; line-height:1.45;">';
-    h += '<div style="font-weight:bold; font-size:9pt; margin-bottom:2px;"></div>';
     if (langMode === 'local') {
-      // Local language only — fall back to English if no local version
       var cName = loc.localCompany || loc.company;
       h += '<div style="font-weight:bold;">'+esc(cName)+'</div>';
       var aLines = loc.localLines.length ? loc.localLines : loc.lines;
       aLines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
     } else {
-      // English only
       h += '<div style="font-weight:bold;">'+esc(loc.company)+'</div>';
-      loc.lines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
+      var aLines = loc.lines.length ? loc.lines : loc.localLines;
+      aLines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
     }
     // Main phone from office data
     if (loc.phone) h += '<div style="margin-top:4px;">Main Phone: <a href="tel:'+esc(loc.phone.replace(/[\s()]/g,''))+'" style="color:'+GRL_BLUE+'; text-decoration:none;">'+esc(loc.phone)+'</a></div>';
