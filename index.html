@@ -584,39 +584,53 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     f += '</div>';
     f += '</div></div>';
 
-    // ── BACK (dark navy — Local language) ──
+    // Check if this office has a distinct local language version
+    var hasLocal = (loc.localCompany && loc.localCompany !== loc.company) ||
+                   (loc.localLines.length > 0 && JSON.stringify(loc.localLines) !== JSON.stringify(loc.lines));
+
+    // ── BACK (dark navy) ──
     var b = '<div style="'+cs+' background:'+NAVY+'; border:1.5px solid #0a2a6e;">';
-    b += '<img src="'+CARD_CIRCUIT_DARK+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.5; pointer-events:none;">';
-    b += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
-    // Top row: logo left, QR right
-    b += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
-    b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
-    b += '<img src="'+CARD_QR+'" alt="QR" width="68" height="68" style="display:block; border:0; border-radius:4px;">';
-    b += '</div>';
-    // Name + Title (local language, fall back to English)
-    var backName = d['grl-name-local'] || d.name;
-    var backTitle = d['grl-title-local'] || d['grl-designation'];
-    b += '<div>';
-    b += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(backName)+'</div>';
-    if (backTitle) b += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(backTitle)+'</div>';
-    b += '</div>';
-    // Bottom: contact left, local language address right
-    b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
-    b += '<div style="font-size:6.4pt; color:#ffffff; line-height:1.6; white-space:nowrap;">';
-    if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
-    if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
-    if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
-    if (d['grl-email2']) b += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
-    b += '</div>';
-    if (localAddr.length) {
-      b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right;">';
-      b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-      b += '<div style="font-weight:bold; white-space:nowrap;">'+esc(localCompanyName)+'</div>';
-      localAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
+
+    if (hasLocal) {
+      // Full back side with local language
+      b += '<img src="'+CARD_CIRCUIT_DARK+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.5; pointer-events:none;">';
+      b += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
+      // Top row: logo left, QR right
+      b += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
+      b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
+      b += '<img src="'+CARD_QR+'" alt="QR" width="68" height="68" style="display:block; border:0; border-radius:4px;">';
+      b += '</div>';
+      // Name + Title (local language, fall back to English)
+      var backName = d['grl-name-local'] || d.name;
+      var backTitle = d['grl-title-local'] || d['grl-designation'];
+      b += '<div>';
+      b += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(backName)+'</div>';
+      if (backTitle) b += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(backTitle)+'</div>';
+      b += '</div>';
+      // Bottom: contact left, local language address right
+      b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
+      b += '<div style="font-size:6.4pt; color:#ffffff; line-height:1.6; white-space:nowrap;">';
+      if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
+      if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
+      if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
+      if (d['grl-email2']) b += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
+      b += '</div>';
+      if (localAddr.length) {
+        b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right;">';
+        b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
+        b += '<div style="font-weight:bold; white-space:nowrap;">'+esc(localCompanyName)+'</div>';
+        localAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
+        b += '</div>';
+      }
+      b += '</div>';
+      b += '</div>';
+    } else {
+      // Minimal back — logo centered, no graphic
+      b += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center;">';
+      b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="80" style="display:block; border:0;">';
       b += '</div>';
     }
     b += '</div>';
-    b += '</div></div>';
 
     // Wrap both
     var h = '<div style="display:flex; flex-direction:column; align-items:center; gap:20px;">';
