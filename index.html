@@ -575,9 +575,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (d['grl-email2']) f += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
     f += '</div>';
     if (enAddr.length) {
-      f += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; max-width:180px;">';
+      f += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right;">';
       f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-      f += '<div style="font-weight:bold;">'+esc(loc.company)+'</div>';
+      f += '<div style="font-weight:bold; white-space:nowrap;">'+esc(loc.company)+'</div>';
       enAddr.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
       f += '</div>';
     }
@@ -609,9 +609,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (d['grl-email2']) b += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
     b += '</div>';
     if (localAddr.length) {
-      b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; max-width:180px;">';
+      b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right;">';
       b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-      b += '<div style="font-weight:bold;">'+esc(localCompanyName)+'</div>';
+      b += '<div style="font-weight:bold; white-space:nowrap;">'+esc(localCompanyName)+'</div>';
       localAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
       b += '</div>';
     }
