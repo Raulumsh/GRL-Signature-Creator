@@ -566,7 +566,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     // ── FRONT (white — English) ──
     var f = '<div style="'+cs+' background:#ffffff; border:1.5px solid #d0d0d0;">';
     f += '<img src="'+CARD_CIRCUIT_LIGHT+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.6; pointer-events:none;">';
-    f += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
+    f += '<div class="bc-inner" style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
     // Top row: logo left, QR right
     f += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
     f += '<img src="'+CARD_LOGO_DARK+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
@@ -578,17 +578,17 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (d['grl-designation']) f += '<div style="font-size:9pt; color:#555; margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
     f += '</div>';
     // Bottom: contact left, English address right
-    f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
-    f += '<div style="font-size:8pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap;">';
+    f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-top:10px;">';
+    f += '<div style="font-size:8pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap; flex:0 0 auto;">';
     if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
     if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
     if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
     if (d['grl-email2']) f += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
     f += '</div>';
     if (enAddr.length) {
-      f += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right;">';
+      f += '<div class="bc-addr" style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:1 1 0; min-width:0; overflow-wrap:anywhere;">';
       f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-      f += '<div style="font-weight:bold; white-space:nowrap;">'+esc(loc.company)+'</div>';
+      f += '<div style="font-weight:bold;">'+esc(loc.company)+'</div>';
       enAddr.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
       f += '</div>';
     }
@@ -605,7 +605,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (hasLocal) {
       // Full back side with local language
       b += '<img src="'+CARD_CIRCUIT_DARK+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.5; pointer-events:none;">';
-      b += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
+      b += '<div class="bc-inner" style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
       // Top row: logo left, QR right
       b += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
       b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
@@ -619,17 +619,17 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       if (backTitle) b += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(backTitle)+'</div>';
       b += '</div>';
       // Bottom: contact left, local language address right
-      b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
-      b += '<div style="font-size:8pt; color:#ffffff; line-height:1.6; white-space:nowrap;">';
+      b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-top:10px;">';
+      b += '<div style="font-size:8pt; color:#ffffff; line-height:1.6; white-space:nowrap; flex:0 0 auto;">';
       if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
       if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
       if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
       if (d['grl-email2']) b += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
       b += '</div>';
       if (localAddr.length) {
-        b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right;">';
+        b += '<div class="bc-addr" style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:1 1 0; min-width:0; overflow-wrap:anywhere;">';
         b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-        b += '<div style="font-weight:bold; white-space:nowrap;">'+esc(localCompanyName)+'</div>';
+        b += '<div style="font-weight:bold;">'+esc(localCompanyName)+'</div>';
         localAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
         b += '</div>';
       }
@@ -651,6 +651,19 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     return h;
   }
 
+  // Shrink the address text until it fits inside the fixed card height
+  function fitCardAddress() {
+    preview.querySelectorAll('.bc-inner').forEach(function(inner) {
+      var addr = inner.querySelector('.bc-addr');
+      if (!addr) return;
+      var size = 5.6;
+      while (inner.scrollHeight > inner.clientHeight + 1 && size > 4) {
+        size -= 0.2;
+        addr.style.fontSize = size.toFixed(1) + 'pt';
+      }
+    });
+  }
+
     function render() {
     var d = getData();
     var html;
@@ -659,6 +672,10 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     else if (currentTpl === 'grl-card') html = renderGrlCard(d);
     else html = renderGrl(d);
     preview.innerHTML = html;
+    if (currentTpl === 'grl-card') {
+      fitCardAddress();
+      html = preview.innerHTML;
+    }
     preview.dataset.html = html;
     toggleSections();
     updateLocPreview();
