@@ -584,16 +584,16 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     // Bottom: contact left, English address right
     f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-top:10px;">';
     f += '<div style="font-size:8pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap; flex:0 0 auto;">';
-    if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
-    if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
-    if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
-    if (d['grl-email2']) f += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
-    if (showTaxId) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
+    if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
+    if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Office</span> '+esc(d['grl-office'])+'</div>';
+    if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Email</span> '+esc(d['grl-email'])+'</div>';
+    if (d['grl-email2']) f += '<div><span style="display:inline-block; width:38px;"></span> '+esc(d['grl-email2'])+'</div>';
+    if (showTaxId) f += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
     f += '</div>';
     if (enAddr.length) {
       f += '<div class="bc-addr" style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:1 1 0; min-width:0; overflow-wrap:anywhere;">';
       f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-      f += '<div style="font-weight:bold;">'+esc(loc.company)+'</div>';
+      f += '<div style="font-weight:900; font-size:1.1em; color:'+NAVY+';">'+esc(loc.company)+'</div>';
       enAddr.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
       f += '</div>';
     }
@@ -605,12 +605,15 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
                    (loc.localLines.length > 0 && JSON.stringify(loc.localLines) !== JSON.stringify(loc.lines));
 
     // ── BACK (dark navy) ──
-    var b = '<div style="'+cs+' background:'+NAVY+'; border:1.5px solid #0a2a6e;">';
+    // Back is 5 mm taller at top and bottom (extra blue for printing); content padding grows to match
+    var EXT = 24; // 5 mm at 120 px/in
+    var csBack = cs.replace('height:'+CH+'px', 'height:'+(CH + EXT * 2)+'px');
+    var b = '<div style="'+csBack+' background:'+NAVY+'; border:1.5px solid #0a2a6e;">';
 
     if (hasLocal) {
       // Full back side with local language
       b += '<img src="'+CARD_CIRCUIT_DARK+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.5; pointer-events:none;">';
-      b += '<div class="bc-inner" style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
+      b += '<div class="bc-inner" style="position:relative; z-index:1; padding:'+(20 + EXT)+'px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
       // Top row: logo left, QR right
       b += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
       b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
@@ -626,16 +629,16 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       // Bottom: contact left, local language address right
       b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-top:10px;">';
       b += '<div style="font-size:8pt; color:#ffffff; line-height:1.6; white-space:nowrap; flex:0 0 auto;">';
-      if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
-      if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
-      if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
-      if (d['grl-email2']) b += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
-      if (showTaxId) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
+      if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
+      if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Office</span> '+esc(d['grl-office'])+'</div>';
+      if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Email</span> '+esc(d['grl-email'])+'</div>';
+      if (d['grl-email2']) b += '<div><span style="display:inline-block; width:38px;"></span> '+esc(d['grl-email2'])+'</div>';
+      if (showTaxId) b += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
       b += '</div>';
       if (localAddr.length) {
         b += '<div class="bc-addr" style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:1 1 0; min-width:0; overflow-wrap:anywhere;">';
         b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-        b += '<div style="font-weight:bold;">'+esc(localCompanyName)+'</div>';
+        b += '<div style="font-weight:900; font-size:1.1em; color:#ffffff;">'+esc(localCompanyName)+'</div>';
         localAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
         b += '</div>';
       }
@@ -869,21 +872,29 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       }
 
       if (cardBack) {
-        pdf.addPage([PDF_W, PDF_H], 'landscape');
+        // Back carries 5 mm of extra blue above and below the card
+        var EXT_IN = 5 / 25.4;
+        var BACK_H = PDF_H + EXT_IN * 2;
+        pdf.addPage([PDF_W, BACK_H], 'landscape');
+        // Fill whole page navy so bleed and rounded corners print blue, not white
+        pdf.setFillColor(3, 27, 97);
+        pdf.rect(0, 0, PDF_W, BACK_H, 'F');
         var canvas2 = await html2canvas(cardBack, renderOpts);
         var img2 = canvas2.toDataURL('image/png');
-        pdf.addImage(img2, 'PNG', BLEED, BLEED, CARD_W, CARD_H);
-        // Trim marks (same as front)
+        pdf.addImage(img2, 'PNG', BLEED, BLEED, CARD_W, CARD_H + EXT_IN * 2);
+        // Trim marks at the standard 3.5 x 2 in card, centred inside the extended blue
+        var tTop = BLEED + EXT_IN;
+        var tBot = tTop + CARD_H;
         pdf.setDrawColor(128, 128, 128);
         pdf.setLineWidth(0.003);
-        pdf.line(BLEED, 0, BLEED, BLEED * 0.7);
-        pdf.line(0, BLEED, BLEED * 0.7, BLEED);
-        pdf.line(BLEED + CARD_W, 0, BLEED + CARD_W, BLEED * 0.7);
-        pdf.line(BLEED + CARD_W + BLEED * 0.3, BLEED, PDF_W, BLEED);
-        pdf.line(BLEED, BLEED + CARD_H + BLEED * 0.3, BLEED, PDF_H);
-        pdf.line(0, BLEED + CARD_H, BLEED * 0.7, BLEED + CARD_H);
-        pdf.line(BLEED + CARD_W, BLEED + CARD_H + BLEED * 0.3, BLEED + CARD_W, PDF_H);
-        pdf.line(BLEED + CARD_W + BLEED * 0.3, BLEED + CARD_H, PDF_W, BLEED + CARD_H);
+        pdf.line(BLEED, 0, BLEED, tTop - BLEED * 0.3);
+        pdf.line(0, tTop, BLEED * 0.7, tTop);
+        pdf.line(BLEED + CARD_W, 0, BLEED + CARD_W, tTop - BLEED * 0.3);
+        pdf.line(BLEED + CARD_W + BLEED * 0.3, tTop, PDF_W, tTop);
+        pdf.line(BLEED, tBot + BLEED * 0.3, BLEED, BACK_H);
+        pdf.line(0, tBot, BLEED * 0.7, tBot);
+        pdf.line(BLEED + CARD_W, tBot + BLEED * 0.3, BLEED + CARD_W, BACK_H);
+        pdf.line(BLEED + CARD_W + BLEED * 0.3, tBot, PDF_W, tBot);
       }
 
       // Page 3: Print specifications
@@ -900,6 +911,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       var specs = [
         ['Card size:', '3.5 × 2 inches (89 × 51 mm) — standard US business card'],
         ['Bleed:', '0.125 inches (3.175 mm) on all sides'],
+        ['Back side:', 'Blue extended 5 mm above and below the card (trim to marks)'],
         ['Resolution:', '300 DPI (rendered at 4× scale)'],
         ['Corners:', '8px radius (rounded)'],
         ['', ''],
