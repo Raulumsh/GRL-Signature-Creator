@@ -130,6 +130,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
           <div class="field full"><label>Job title / Designation</label><input id="f-grl-designation" type="text" placeholder="Director of Engineering"></div>
           <div class="field full"><label>Email</label><input id="f-grl-email" type="email" placeholder="anne.tsou@graniteriverlabs.com"></div>
           <div class="field full"><label>Additional email <span class="opt">(optional)</span></label><input id="f-grl-email2" type="email" placeholder="anne.tsou@sgs.com"></div>
+          <div class="field full" id="field-grl-taxid"><label>Tax ID <span class="opt">(optional)</span></label><input id="f-grl-taxid" type="text" placeholder="12345678"></div>
           <div class="field full"><label>Website</label><input id="f-grl-website" type="text" value="graniteriverlabs.com"></div>
         </div>
         <p class="card-title" style="margin-top:16px;">Back side — Local language</p>
@@ -389,7 +390,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   var langMode = 'en'; // 'en' or 'local'
 
   var inputIds = ['name','bu','jobtitle','company','addr1','addr2','phone','mobile','fax','email','regulatory',
-                  'grl-office','grl-mobile','grl-links','grl-designation','grl-email','grl-email2','grl-website','grl-title','grl-name-local','grl-title-local'];
+                  'grl-office','grl-mobile','grl-links','grl-designation','grl-email','grl-email2','grl-taxid','grl-website','grl-title','grl-name-local','grl-title-local'];
   var inputs = {};
   inputIds.forEach(function(f) { inputs[f] = $('f-' + f); });
 
@@ -524,6 +525,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     document.querySelectorAll('.sec-grl-card').forEach(function(el) { el.classList.toggle('section-hidden', !isAnyGrl); });
     document.querySelectorAll('.sec-grl-card-only').forEach(function(el) { el.classList.toggle('section-hidden', !isGrlCard); });
     document.querySelectorAll('.sec-grl-sig-only').forEach(function(el) { el.classList.toggle('section-hidden', !isGrl); });
+    $('field-grl-taxid').classList.toggle('section-hidden', locSelect.value !== 'taiwan');
     // Toggle action buttons
     $('btn-copy-rich').style.display = isGrlCard ? 'none' : '';
     $('btn-copy-html').style.display = isGrlCard ? 'none' : '';
@@ -562,6 +564,8 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     var localAddr = loc.localLines.length ? loc.localLines : loc.lines;
     // Local company name (for back) — fall back to English
     var localCompanyName = loc.localCompany || loc.company;
+    // Tax ID is only printed for the Taiwan office
+    var showTaxId = d['grl-location'] === 'taiwan' && d['grl-taxid'];
 
     // ── FRONT (white — English) ──
     var f = '<div style="'+cs+' background:#ffffff; border:1.5px solid #d0d0d0;">';
@@ -584,6 +588,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
     if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
     if (d['grl-email2']) f += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
+    if (showTaxId) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
     f += '</div>';
     if (enAddr.length) {
       f += '<div class="bc-addr" style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:1 1 0; min-width:0; overflow-wrap:anywhere;">';
@@ -625,6 +630,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
       if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
       if (d['grl-email2']) b += '<div><span style="display:inline-block; width:48px;"></span> '+esc(d['grl-email2'])+'</div>';
+      if (showTaxId) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
       b += '</div>';
       if (localAddr.length) {
         b += '<div class="bc-addr" style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:1 1 0; min-width:0; overflow-wrap:anywhere;">';
