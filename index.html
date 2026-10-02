@@ -596,9 +596,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (showTaxId) f += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
     f += '</div>';
     if (enAddr.length) {
-      f += '<div class="bc-addr" style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:1 1 0; min-width:0; overflow-wrap:anywhere;">';
+      f += '<div class="bc-addr" style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:1 1 0; overflow-wrap:anywhere;">';
       f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-      f += '<div style="font-weight:900; font-size:1.1em; color:'+NAVY+';">'+escLines(loc.company)+'</div>';
+      f += '<div style="font-weight:900; font-size:1.1em; color:'+NAVY+'; white-space:nowrap;">'+escLines(loc.company)+'</div>';
       enAddr.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
       f += '</div>';
     }
@@ -641,9 +641,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       if (showTaxId) b += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
       b += '</div>';
       if (localAddr.length) {
-        b += '<div class="bc-addr" style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:1 1 0; min-width:0; overflow-wrap:anywhere;">';
+        b += '<div class="bc-addr" style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:1 1 0; overflow-wrap:anywhere;">';
         b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-        b += '<div style="font-weight:900; font-size:1.1em; color:#ffffff;">'+escLines(localCompanyName)+'</div>';
+        b += '<div style="font-weight:900; font-size:1.1em; color:#ffffff; white-space:nowrap;">'+escLines(localCompanyName)+'</div>';
         localAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
         b += '</div>';
       }
