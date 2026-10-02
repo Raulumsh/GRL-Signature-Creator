@@ -302,7 +302,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     },
     'taiwan': {
       label: 'Taiwan',
-      company: ['Granite River Labs Asia Pacific Pte. Ltd.','Taiwan Branch'],
+      company: 'Granite River Labs Asia Pacific Pte. Ltd.\nTaiwan Branch',
       localCompany: '新加坡商技流創新有限公司台灣分公司',
       lines: ['5F., No. 489, Sec. 2, Tiding Blvd., Neihu Dist., Taipei City 11493, Taiwan'],
       localLines: ['11493 台北市內湖區堤頂大道二段489號5F'],
@@ -400,6 +400,11 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     d['grl-location'] = locSelect.value;
     return d;
   }
+  // Escape and turn \n into line breaks (used for multi-line company names)
+  function escLines(s) {
+    return esc(s).replace(/\n/g, '<br>');
+  }
+
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
       return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
@@ -481,11 +486,11 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     h += '<td style="vertical-align:top; font-size:8pt; color:'+GRL_BLUE+'; line-height:1.45;">';
     if (langMode === 'local') {
       var cName = loc.localCompany || loc.company;
-      h += '<div style="font-weight:bold;">'+esc(cName)+'</div>';
+      h += '<div style="font-weight:bold;">'+escLines(cName)+'</div>';
       var aLines = loc.localLines.length ? loc.localLines : loc.lines;
       aLines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
     } else {
-      h += '<div style="font-weight:bold;">'+esc(loc.company)+'</div>';
+      h += '<div style="font-weight:bold;">'+escLines(loc.company)+'</div>';
       var aLines = loc.lines.length ? loc.lines : loc.localLines;
       aLines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
     }
@@ -593,7 +598,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (enAddr.length) {
       f += '<div class="bc-addr" style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:1 1 0; min-width:0; overflow-wrap:anywhere;">';
       f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-      f += '<div style="font-weight:900; font-size:1.1em; color:'+NAVY+';">'+esc(loc.company)+'</div>';
+      f += '<div style="font-weight:900; font-size:1.1em; color:'+NAVY+';">'+escLines(loc.company)+'</div>';
       enAddr.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
       f += '</div>';
     }
@@ -638,7 +643,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       if (localAddr.length) {
         b += '<div class="bc-addr" style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:1 1 0; min-width:0; overflow-wrap:anywhere;">';
         b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-        b += '<div style="font-weight:900; font-size:1.1em; color:#ffffff;">'+esc(localCompanyName)+'</div>';
+        b += '<div style="font-weight:900; font-size:1.1em; color:#ffffff;">'+escLines(localCompanyName)+'</div>';
         localAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
         b += '</div>';
       }
