@@ -469,7 +469,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (langMode === 'local') {
       // Local language only — fall back to English if no local version
       var cName = loc.localCompany || loc.company;
-      h += '<div style="font-weight:bold;">'+esc(cName)+'</div>';
+      h += '<div style="font-family:Arial,\'Microsoft JhengHei\',\'Microsoft YaHei\',\'PingFang TC\',\'Noto Sans CJK TC\',sans-serif; font-weight:bold;">'+esc(cName)+'</div>';
       var aLines = loc.localLines.length ? loc.localLines : loc.lines;
       aLines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
     } else {
@@ -610,7 +610,8 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     // Right: local address (fixed width, top-aligned with Mobile)
     b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:0 0 180px;">';
     b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-    b += '<div style="font-weight:bold; white-space:nowrap;">'+esc(backCompany)+'</div>';
+    // CJK fonts with a real bold weight, so local company names render bold (Arial has no CJK glyphs)
+    b += '<div style="font-family:Arial,\'Microsoft JhengHei\',\'Microsoft YaHei\',\'PingFang TC\',\'Noto Sans CJK TC\',sans-serif; font-weight:bold; color:#ffffff; white-space:nowrap;">'+esc(backCompany)+'</div>';
     backAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
     b += '</div>';
     b += '</div>';
