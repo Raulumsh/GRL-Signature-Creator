@@ -539,10 +539,8 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     var CH = 240;
     var cs = 'width:'+CW+'px; height:'+CH+'px; border-radius:8px; overflow:hidden; position:relative; font-family:Arial,Helvetica,sans-serif; box-shadow:0 3px 16px rgba(0,0,0,0.12);';
 
-    // Build address lines
-    var addrLines = [];
-    loc.localLines.forEach(function(l) { addrLines.push(l); });
-    loc.lines.forEach(function(l) { addrLines.push(l); });
+    // Front card uses English address
+    var frontAddr = loc.lines.length ? loc.lines : loc.localLines;
 
     // ── FRONT (dark navy) ──
     var f = '<div style="'+cs+' background:'+NAVY+'; border:1.5px solid #0a2a6e;">';
@@ -555,7 +553,6 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     f += '</div>';
     // Name + Title
     f += '<div>';
-    f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:2px; border-radius:1px;"></div>';
     f += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
     if (d['grl-designation']) f += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
     f += '</div>';
@@ -571,7 +568,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     f += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:0 0 180px;">';
     f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
     f += '<div style="font-weight:bold; white-space:nowrap;">'+esc(loc.company)+'</div>';
-    addrLines.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
+    frontAddr.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
     f += '</div>';
     f += '</div>';
     f += '</div></div>';
@@ -587,11 +584,12 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     b += '</div>';
     // Name + Title
     b += '<div>';
-    b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:2px; border-radius:1px;"></div>';
     b += '<div style="font-size:16pt; font-weight:bold; color:'+NAVY+'; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
     if (d['grl-designation']) b += '<div style="font-size:9pt; color:#555; margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
     b += '</div>';
-    // Contact left + address right, top-aligned
+    // Contact left + address right (LOCAL language), top-aligned
+    var backCompany = loc.localCompany || loc.company;
+    var backAddr = loc.localLines.length ? loc.localLines : loc.lines;
     b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
     // Left: Mobile, Office, Email stacked
     b += '<div style="font-size:7pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
@@ -599,11 +597,11 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Office</span> '+esc(d['grl-office'])+'</div>';
     if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Email</span> '+esc(d['grl-email'])+'</div>';
     b += '</div>';
-    // Right: address (fixed width, top-aligned with Mobile)
+    // Right: local address (fixed width, top-aligned with Mobile)
     b += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:0 0 180px;">';
     b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-    b += '<div style="font-weight:bold; white-space:nowrap;">'+esc(loc.company)+'</div>';
-    addrLines.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
+    b += '<div style="font-weight:bold; white-space:nowrap;">'+esc(backCompany)+'</div>';
+    backAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
     b += '</div>';
     b += '</div>';
     b += '</div></div>';
