@@ -35,7 +35,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
 .card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 20px 22px; }
 .card + .card { margin-top: 14px; }
 .card-title { font-size: 11px; font-weight: 600; color: var(--text-2); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.08em; }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; align-items: end; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; }
 .field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 .field.full { grid-column: 1 / -1; }
 .field label { font-size: 12px; font-weight: 500; color: var(--text-2); }
@@ -98,7 +98,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
         <p class="card-title">Signature type</p>
         <div class="tpl-row" id="tpl-row">
           <button class="tpl-btn active" data-tpl="grl">GRL</button>
-          <button class="tpl-btn" data-tpl="grl-card" id="btn-card-tab" style="display:none;">GRL — Business Card</button>
+          <button class="tpl-btn" data-tpl="grl-card">GRL — Business Card</button>
           <button class="tpl-btn" data-tpl="sgs-new" style="display:none;">SGS — New email</button>
           <button class="tpl-btn" data-tpl="sgs-reply" style="display:none;">SGS — Reply / Fwd</button>
         </div>
@@ -118,8 +118,8 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       <div class="card sec-grl sec-grl-card">
         <p class="card-title">Contact</p>
         <div class="form-grid">
-          <div class="field"><label>Office phone <span class="opt">(optional)</span></label><input id="f-grl-office" type="tel" placeholder="+886 (2) 2657-2199 #143"></div>
-          <div class="field"><label>Mobile</label><input id="f-grl-mobile" type="tel" placeholder="0931594196"></div>
+          <div class="field"><label>Office phone</label><input id="f-grl-office" type="tel" placeholder="+886 (2) 2657-2199 #143"></div>
+          <div class="field"><label>Mobile <span class="opt">(optional)</span></label><input id="f-grl-mobile" type="tel" placeholder="0931594196"></div>
         </div>
       </div>
 
@@ -129,14 +129,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
         <div class="form-grid">
           <div class="field full"><label>Job title / Designation</label><input id="f-grl-designation" type="text" placeholder="Director of Engineering"></div>
           <div class="field full"><label>Email</label><input id="f-grl-email" type="email" placeholder="anne.tsou@graniteriverlabs.com"></div>
-          <div class="field full"><label>Additional email <span class="opt">(optional)</span></label><input id="f-grl-email2" type="email" placeholder="anne.tsou@sgs.com"></div>
-          <div class="field full" id="field-grl-taxid"><label>Tax ID <span class="opt">(optional)</span></label><input id="f-grl-taxid" type="text" placeholder="12345678"></div>
           <div class="field full"><label>Website</label><input id="f-grl-website" type="text" value="graniteriverlabs.com"></div>
-        </div>
-        <p class="card-title" style="margin-top:16px;">Back side — Local language</p>
-        <div class="form-grid">
-          <div class="field full"><label>Name (local language) <span class="opt">— leave blank to use English</span></label><input id="f-grl-name-local" type="text" placeholder="e.g. 鄒安妮"></div>
-          <div class="field full"><label>Job title (local language) <span class="opt">— leave blank to use English</span></label><input id="f-grl-title-local" type="text" placeholder="e.g. 資深工程師"></div>
         </div>
       </div>
 
@@ -246,11 +239,8 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
         <div class="info">
           <strong>Outlook desktop:</strong> File &rarr; Options &rarr; Mail &rarr; Signatures. Create new, paste.<br>
           <strong>Outlook web:</strong> Settings &rarr; Mail &rarr; Compose and reply &rarr; Email signature.<br>
-          <strong>Outlook mobile (iOS/Android):</strong> Settings &rarr; tap your account &rarr; Signature &rarr; paste the copied signature.<br>
-          <strong>Gmail desktop:</strong> Settings &rarr; See all settings &rarr; General &rarr; Signature.<br>
-          <strong>Gmail mobile:</strong> Settings &rarr; your account &rarr; Mobile signature &rarr; paste.<br>
-          <strong>Apple Mail (iPhone):</strong> Settings &rarr; Mail &rarr; Signature &rarr; paste.<br>
-          <strong>Tip:</strong> Use "Copy signature" to paste the rich version. If images don't appear, ensure your email client is set to HTML format, not plain text.
+          <strong>Gmail:</strong> Settings &rarr; See all settings &rarr; General &rarr; Signature.<br>
+          <strong>Tip:</strong> Set signatures to auto-attach to every new email, reply, and forward.
         </div>
       </div>
 
@@ -302,11 +292,11 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     },
     'taiwan': {
       label: 'Taiwan',
-      company: 'Granite River Labs Asia Pacific Pte. Ltd.\nTaiwan Branch',
+      company: 'Granite River Labs Asia Pacific Pte. Ltd., Taiwan Branch',
       localCompany: '新加坡商技流創新有限公司台灣分公司',
-      lines: ['5F., No. 489, Sec. 2, Tiding Blvd., Neihu Dist.', 'Taipei City 11493, Taiwan'],
+      lines: ['5F., No. 489, Sec. 2, Tiding Blvd., Neihu Dist., Taipei City 11493, Taiwan'],
       localLines: ['11493 台北市內湖區堤頂大道二段489號5F'],
-      phone: '+886 (2) 2657-2199',
+      phone: '',
       links: 'graniteriverlabs.com/zh-tw/   •   linkedin.com/graniteriverlabs'
     },
     'shanghai': {
@@ -315,7 +305,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       localCompany: '技流（上海）信息科技有限公司',
       lines: ['Room 103, B2, No.700 Yishan Rd, Xuhui District, Shanghai, China, 200233'],
       localLines: ['200233上海市徐汇区宜山路700号B2座103室'],
-      phone: '+86 (21) 5439-9037',
+      phone: '',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
     'dongguan': {
@@ -324,7 +314,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       localCompany: '东莞技流信息科技有限公司',
       lines: ['Room 2001, Level 20, Building A, No. 5 Keji 2nd Rd., Songshan Lake, Dongguan City China 523808'],
       localLines: ['广东省东莞市松山湖园区科技二路5号A座2001室'],
-      phone: '+86 (769) 2223-5721',
+      phone: '',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
     'germany': {
@@ -348,9 +338,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     'japan': {
       label: 'Japan',
       company: 'Granite River Labs Japan Ltd.',
-      localCompany: 'グラナイトリバーラボ・ジャパン株式会社',
-      lines: ['6F Urbancenter Shin-Yokohama,', '2-2-8 Shin-Yokohama, Kohoku-ku', 'Yokohama 222-0033 Japan'],
-      localLines: ['〒222-0033 神奈川県横浜市港北区新横浜2-2-8','アーバンセンター新横浜6F'],
+      localCompany: '日本、横浜・ラボ',
+      lines: [],
+      localLines: ['〒222-0033 神奈川県横浜市港北区新横浜 2-2-8 アーバンセンター新横浜6階'],
       phone: '+81 45-470-0030',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
@@ -360,15 +350,15 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       localCompany: 'Granite River Labs Asia Pacific Pte. Ltd. 한국 지사',
       lines: ['#908~913, BT Center,', '56 Songdogwahak-ro,', 'Yeonsu-gu, Incheon, 21984'],
       localLines: ['인천광역시 연수구 송도과학로 56', 'BT센터 9층 908~913호 (우편번호 21984)'],
-      phone: '+82 070 8808 5214',
+      phone: '',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
     'india': {
       label: 'India',
       company: 'Granite River Labs India Services Private Limited',
       localCompany: 'Granite River Labs India Services Private Limited',
-      lines: ['Unit No. 10, ROACH ICON (RBD Icon),', 'Survey No. 28 & 36/5, Outer Ring Road,', 'Doddanekundi, Bengaluru 560037'],
-      localLines: ['Unit No. 10, ROACH ICON (RBD Icon),', 'Survey No. 28 & 36/5, Outer Ring Road,', 'Doddanekundi, Bengaluru 560037'],
+      lines: ['Unit No. 10, 1st Floor, ROACH ICON (RBD Icon),', 'Survey No. 28 & 36/5, Outer Ring Road,', 'Doddanekundi, K R Puram Hobli,', 'Bengaluru 560037, India'],
+      localLines: ['Unit No. 10, 1st Floor, ROACH ICON (RBD Icon),', 'Survey No. 28 & 36/5, Outer Ring Road,', 'Doddanekundi, K R Puram Hobli,', 'Bengaluru 560037, India'],
       phone: '+91 80-2990 0533',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     }
@@ -377,12 +367,6 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   var $ = function(id) { return document.getElementById(id); };
   var STORAGE_KEY = 'sig-creator-v4';
   var currentTpl = 'grl';
-
-  // Show business card tab if URL contains ?mode=card
-  var urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('mode') === 'card') {
-    $('btn-card-tab').style.display = '';
-  }
   var preview = $('preview');
   var toast = $('toast');
   var locSelect = $('f-grl-location');
@@ -390,7 +374,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   var langMode = 'en'; // 'en' or 'local'
 
   var inputIds = ['name','bu','jobtitle','company','addr1','addr2','phone','mobile','fax','email','regulatory',
-                  'grl-office','grl-mobile','grl-links','grl-designation','grl-email','grl-email2','grl-taxid','grl-website','grl-title','grl-name-local','grl-title-local'];
+                  'grl-office','grl-mobile','grl-links','grl-designation','grl-email','grl-website','grl-title'];
   var inputs = {};
   inputIds.forEach(function(f) { inputs[f] = $('f-' + f); });
 
@@ -400,11 +384,6 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     d['grl-location'] = locSelect.value;
     return d;
   }
-  // Escape and turn \n into line breaks (used for multi-line company names)
-  function escLines(s) {
-    return esc(s).replace(/\n/g, '<br>');
-  }
-
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
       return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
@@ -426,8 +405,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       aLines.forEach(function(l) { lines.push(l); });
     } else {
       lines.push(loc.company);
-      var aLines = loc.lines.length ? loc.lines : loc.localLines;
-      aLines.forEach(function(l) { lines.push(l); });
+      loc.lines.forEach(function(l) { lines.push(l); });
     }
     if (loc.phone) lines.push('Main Phone: ' + loc.phone);
     locPreview.textContent = lines.join('\n');
@@ -464,12 +442,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   }
 
   // ── GRL ──
-  var GRL_LOGO_URL = 'https://graniteriverlabs.com/hubfs/GRL-logo-By-SGS-RGB.png';
-
   function renderGrl(d) {
     var loc = OFFICES[d['grl-location']] || OFFICES['taiwan'];
-    // Outer wrapper - max-width for mobile
-    var h = '<div style="font-family:Arial,Helvetica,sans-serif; max-width:600px;">';
+    var h = '<div style="font-family:Arial,Helvetica,sans-serif;">';
     // Name
     h += '<div style="font-size:11pt; font-weight:bold; color:'+GRL_BLUE+';">'+esc(d.name)+'</div>';
     // Job title
@@ -479,20 +454,22 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     h += '<br>';
     // Company block with background
     h += '<div style="background:'+GRL_BG+'; padding:14px 16px; border-radius:4px;">';
-    h += '<table cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:100%;"><tr>';
-    h += '<td style="vertical-align:middle; padding-right:14px; width:115px;">';
-    h += '<img src="'+GRL_LOGO_URL+'" alt="GRL by SGS" width="109" style="display:block; border:0; max-width:100%; height:auto;">';
+    h += '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>';
+    h += '<td style="vertical-align:middle; padding-right:14px; width:80px;">';
+    h += '<img src="https://graniteriverlabs.com/hubfs/GRL%20logo_By%20SGS%20-%20RGB%20(1).png" alt="GRL" width="109" style="display:block; border:0;">';
     h += '</td>';
     h += '<td style="vertical-align:top; font-size:8pt; color:'+GRL_BLUE+'; line-height:1.45;">';
+    h += '<div style="font-weight:bold; font-size:9pt; margin-bottom:2px;">GRL</div>';
     if (langMode === 'local') {
+      // Local language only — fall back to English if no local version
       var cName = loc.localCompany || loc.company;
-      h += '<div style="font-weight:bold;">'+escLines(cName)+'</div>';
+      h += '<div style="font-weight:bold;">'+esc(cName)+'</div>';
       var aLines = loc.localLines.length ? loc.localLines : loc.lines;
       aLines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
     } else {
-      h += '<div style="font-weight:bold;">'+escLines(loc.company)+'</div>';
-      var aLines = loc.lines.length ? loc.lines : loc.localLines;
-      aLines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
+      // English only
+      h += '<div style="font-weight:bold;">'+esc(loc.company)+'</div>';
+      loc.lines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
     }
     // Main phone from office data
     if (loc.phone) h += '<div style="margin-top:4px;">Main Phone: <a href="tel:'+esc(loc.phone.replace(/[\s()]/g,''))+'" style="color:'+GRL_BLUE+'; text-decoration:none;">'+esc(loc.phone)+'</a></div>';
@@ -530,7 +507,6 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     document.querySelectorAll('.sec-grl-card').forEach(function(el) { el.classList.toggle('section-hidden', !isAnyGrl); });
     document.querySelectorAll('.sec-grl-card-only').forEach(function(el) { el.classList.toggle('section-hidden', !isGrlCard); });
     document.querySelectorAll('.sec-grl-sig-only').forEach(function(el) { el.classList.toggle('section-hidden', !isGrl); });
-    $('field-grl-taxid').classList.toggle('section-hidden', locSelect.value !== 'taiwan');
     // Toggle action buttons
     $('btn-copy-rich').style.display = isGrlCard ? 'none' : '';
     $('btn-copy-html').style.display = isGrlCard ? 'none' : '';
@@ -563,99 +539,76 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     var CH = 240;
     var cs = 'width:'+CW+'px; height:'+CH+'px; border-radius:8px; overflow:hidden; position:relative; font-family:Arial,Helvetica,sans-serif; box-shadow:0 3px 16px rgba(0,0,0,0.12);';
 
-    // English address lines (for front)
-    var enAddr = loc.lines.length ? loc.lines : loc.localLines;
-    // Local address lines (for back) — fall back to English
-    var localAddr = loc.localLines.length ? loc.localLines : loc.lines;
-    // Local company name (for back) — fall back to English
-    var localCompanyName = loc.localCompany || loc.company;
-    // Tax ID is only printed for the Taiwan office
-    var showTaxId = d['grl-location'] === 'taiwan' && d['grl-taxid'];
+    // Build address lines
+    var addrLines = [];
+    loc.localLines.forEach(function(l) { addrLines.push(l); });
+    loc.lines.forEach(function(l) { addrLines.push(l); });
 
-    // ── FRONT (white — English) ──
-    var f = '<div style="'+cs+' background:#ffffff; border:1.5px solid #d0d0d0;">';
-    f += '<img src="'+CARD_CIRCUIT_LIGHT+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.6; pointer-events:none;">';
-    f += '<div class="bc-inner" style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
+    // ── FRONT (dark navy) ──
+    var f = '<div style="'+cs+' background:'+NAVY+'; border:1.5px solid #0a2a6e;">';
+    f += '<img src="'+CARD_CIRCUIT_DARK+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.5; pointer-events:none;">';
+    f += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
     // Top row: logo left, QR right
     f += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
-    f += '<img src="'+CARD_LOGO_DARK+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
+    f += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
     f += '<img src="'+CARD_QR+'" alt="QR" width="68" height="68" style="display:block; border:0; border-radius:4px;">';
     f += '</div>';
-    // Name + Title (English)
+    // Name + Title
     f += '<div>';
-    f += '<div style="font-size:16pt; font-weight:bold; color:'+NAVY+'; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
-    if (d['grl-designation']) f += '<div style="font-size:9pt; color:#555; margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
+    f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:2px; border-radius:1px;"></div>';
+    f += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
+    if (d['grl-designation']) f += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
     f += '</div>';
-    // Bottom: contact left, English address right
-    f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-top:10px;">';
-    f += '<div style="font-size:8pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap; flex:0 0 auto;">';
-    if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
-    if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Office</span> '+esc(d['grl-office'])+'</div>';
-    if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Email</span> '+esc(d['grl-email'])+'</div>';
-    if (d['grl-email2']) f += '<div><span style="display:inline-block; width:38px;"></span> '+esc(d['grl-email2'])+'</div>';
-    if (showTaxId) f += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
+    // Row 1: Mobile standalone
+    if (d['grl-mobile']) f += '<div style="font-size:8pt; color:#ffffff; line-height:1.6; white-space:nowrap; margin-top:10px;"><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
+    // Row 2: Office+Email left, address right
+    f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:2px;">';
+    // Left: office + email (flexible, truncates if needed)
+    f += '<div style="font-size:8pt; color:#ffffff; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
+    if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
+    if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
     f += '</div>';
-    if (enAddr.length) {
-      f += '<div class="bc-addr" style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:1 1 0; overflow-wrap:anywhere;">';
-      f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-      f += '<div style="font-weight:900; font-size:1.1em; color:'+NAVY+'; white-space:nowrap;">'+escLines(loc.company)+'</div>';
-      enAddr.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
-      f += '</div>';
-    }
+    // Right: address with red dash (fixed width, never pushed)
+    f += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:0 0 180px;">';
+    f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
+    f += '<div style="font-weight:bold; white-space:nowrap;">'+esc(loc.company)+'</div>';
+    addrLines.forEach(function(line) { f += '<div>'+esc(line)+'</div>'; });
+    f += '</div>';
     f += '</div>';
     f += '</div></div>';
 
-    // Check if this office has a distinct local language version
-    var hasLocal = (loc.localCompany && loc.localCompany !== loc.company) ||
-                   (loc.localLines.length > 0 && JSON.stringify(loc.localLines) !== JSON.stringify(loc.lines));
-
-    // ── BACK (dark navy) ──
-    // Back is 5 mm taller at top and bottom (extra blue for printing); content padding grows to match
-    var EXT = 24; // 5 mm at 120 px/in
-    var csBack = cs.replace('height:'+CH+'px', 'height:'+(CH + EXT * 2)+'px');
-    var b = '<div style="'+csBack+' background:'+NAVY+'; border:1.5px solid #0a2a6e;">';
-
-    if (hasLocal) {
-      // Full back side with local language
-      b += '<img src="'+CARD_CIRCUIT_DARK+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.5; pointer-events:none;">';
-      b += '<div class="bc-inner" style="position:relative; z-index:1; padding:'+(20 + EXT)+'px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
-      // Top row: logo left, QR right
-      b += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
-      b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
-      b += '<img src="'+CARD_QR+'" alt="QR" width="68" height="68" style="display:block; border:0; border-radius:4px;">';
-      b += '</div>';
-      // Name + Title (local language, fall back to English)
-      var backName = d['grl-name-local'] || d.name;
-      var backTitle = d['grl-title-local'] || d['grl-designation'];
-      b += '<div>';
-      b += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(backName)+'</div>';
-      if (backTitle) b += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(backTitle)+'</div>';
-      b += '</div>';
-      // Bottom: contact left, local language address right
-      b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-top:10px;">';
-      b += '<div style="font-size:8pt; color:#ffffff; line-height:1.6; white-space:nowrap; flex:0 0 auto;">';
-      if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
-      if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Office</span> '+esc(d['grl-office'])+'</div>';
-      if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Email</span> '+esc(d['grl-email'])+'</div>';
-      if (d['grl-email2']) b += '<div><span style="display:inline-block; width:38px;"></span> '+esc(d['grl-email2'])+'</div>';
-      if (showTaxId) b += '<div><span style="font-weight:bold; display:inline-block; width:38px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
-      b += '</div>';
-      if (localAddr.length) {
-        b += '<div class="bc-addr" style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:1 1 0; overflow-wrap:anywhere;">';
-        b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-        b += '<div style="font-weight:900; font-size:1.1em; color:#ffffff; white-space:nowrap;">'+escLines(localCompanyName)+'</div>';
-        localAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
-        b += '</div>';
-      }
-      b += '</div>';
-      b += '</div>';
-    } else {
-      // Minimal back — logo centered, no graphic
-      b += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center;">';
-      b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="80" style="display:block; border:0;">';
-      b += '</div>';
-    }
+    // ── BACK (white) ──
+    var b = '<div style="'+cs+' background:#ffffff; border:1.5px solid #d0d0d0;">';
+    b += '<img src="'+CARD_CIRCUIT_LIGHT+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.6; pointer-events:none;">';
+    b += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
+    // Top row: logo left, QR right
+    b += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
+    b += '<img src="'+CARD_LOGO_DARK+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
+    b += '<img src="'+CARD_QR+'" alt="QR" width="68" height="68" style="display:block; border:0; border-radius:4px;">';
     b += '</div>';
+    // Name + Title
+    b += '<div>';
+    b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:2px; border-radius:1px;"></div>';
+    b += '<div style="font-size:16pt; font-weight:bold; color:'+NAVY+'; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
+    if (d['grl-designation']) b += '<div style="font-size:9pt; color:#555; margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
+    b += '</div>';
+    // Row 1: Mobile standalone
+    if (d['grl-mobile']) b += '<div style="font-size:8pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap; margin-top:10px;"><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
+    // Row 2: Office+Email left, address right
+    b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:2px;">';
+    // Left: office + email (flexible, truncates if needed)
+    b += '<div style="font-size:8pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
+    if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
+    if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
+    b += '</div>';
+    // Right: address with red dash (fixed width, never pushed)
+    b += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:0 0 180px;">';
+    b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
+    b += '<div style="font-weight:bold; white-space:nowrap;">'+esc(loc.company)+'</div>';
+    addrLines.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
+    b += '</div>';
+    b += '</div>';
+    b += '</div></div>';
 
     // Wrap both
     var h = '<div style="display:flex; flex-direction:column; align-items:center; gap:20px;">';
@@ -663,19 +616,6 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     h += '<div><div style="font-size:11px; color:#999; margin-bottom:8px; font-weight:500; text-align:center;">BACK</div>'+b+'</div>';
     h += '</div>';
     return h;
-  }
-
-  // Shrink the address text until it fits inside the fixed card height
-  function fitCardAddress() {
-    preview.querySelectorAll('.bc-inner').forEach(function(inner) {
-      var addr = inner.querySelector('.bc-addr');
-      if (!addr) return;
-      var size = 5.6;
-      while (inner.scrollHeight > inner.clientHeight + 1 && size > 4) {
-        size -= 0.2;
-        addr.style.fontSize = size.toFixed(1) + 'pt';
-      }
-    });
   }
 
     function render() {
@@ -686,10 +626,6 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     else if (currentTpl === 'grl-card') html = renderGrlCard(d);
     else html = renderGrl(d);
     preview.innerHTML = html;
-    if (currentTpl === 'grl-card') {
-      fitCardAddress();
-      html = preview.innerHTML;
-    }
     preview.dataset.html = html;
     toggleSections();
     updateLocPreview();
@@ -877,29 +813,21 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       }
 
       if (cardBack) {
-        // Back carries 5 mm of extra blue above and below the card
-        var EXT_IN = 5 / 25.4;
-        var BACK_H = PDF_H + EXT_IN * 2;
-        pdf.addPage([PDF_W, BACK_H], 'landscape');
-        // Fill whole page navy so bleed and rounded corners print blue, not white
-        pdf.setFillColor(3, 27, 97);
-        pdf.rect(0, 0, PDF_W, BACK_H, 'F');
+        pdf.addPage([PDF_W, PDF_H], 'landscape');
         var canvas2 = await html2canvas(cardBack, renderOpts);
         var img2 = canvas2.toDataURL('image/png');
-        pdf.addImage(img2, 'PNG', BLEED, BLEED, CARD_W, CARD_H + EXT_IN * 2);
-        // Trim marks at the standard 3.5 x 2 in card, centred inside the extended blue
-        var tTop = BLEED + EXT_IN;
-        var tBot = tTop + CARD_H;
+        pdf.addImage(img2, 'PNG', BLEED, BLEED, CARD_W, CARD_H);
+        // Trim marks (same as front)
         pdf.setDrawColor(128, 128, 128);
         pdf.setLineWidth(0.003);
-        pdf.line(BLEED, 0, BLEED, tTop - BLEED * 0.3);
-        pdf.line(0, tTop, BLEED * 0.7, tTop);
-        pdf.line(BLEED + CARD_W, 0, BLEED + CARD_W, tTop - BLEED * 0.3);
-        pdf.line(BLEED + CARD_W + BLEED * 0.3, tTop, PDF_W, tTop);
-        pdf.line(BLEED, tBot + BLEED * 0.3, BLEED, BACK_H);
-        pdf.line(0, tBot, BLEED * 0.7, tBot);
-        pdf.line(BLEED + CARD_W, tBot + BLEED * 0.3, BLEED + CARD_W, BACK_H);
-        pdf.line(BLEED + CARD_W + BLEED * 0.3, tBot, PDF_W, tBot);
+        pdf.line(BLEED, 0, BLEED, BLEED * 0.7);
+        pdf.line(0, BLEED, BLEED * 0.7, BLEED);
+        pdf.line(BLEED + CARD_W, 0, BLEED + CARD_W, BLEED * 0.7);
+        pdf.line(BLEED + CARD_W + BLEED * 0.3, BLEED, PDF_W, BLEED);
+        pdf.line(BLEED, BLEED + CARD_H + BLEED * 0.3, BLEED, PDF_H);
+        pdf.line(0, BLEED + CARD_H, BLEED * 0.7, BLEED + CARD_H);
+        pdf.line(BLEED + CARD_W, BLEED + CARD_H + BLEED * 0.3, BLEED + CARD_W, PDF_H);
+        pdf.line(BLEED + CARD_W + BLEED * 0.3, BLEED + CARD_H, PDF_W, BLEED + CARD_H);
       }
 
       // Page 3: Print specifications
@@ -916,7 +844,6 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       var specs = [
         ['Card size:', '3.5 × 2 inches (89 × 51 mm) — standard US business card'],
         ['Bleed:', '0.125 inches (3.175 mm) on all sides'],
-        ['Back side:', 'Blue extended 5 mm above and below the card (trim to marks)'],
         ['Resolution:', '300 DPI (rendered at 4× scale)'],
         ['Corners:', '8px radius (rounded)'],
         ['', ''],
