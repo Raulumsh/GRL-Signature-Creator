@@ -559,16 +559,15 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     f += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
     if (d['grl-designation']) f += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
     f += '</div>';
-    // Row 1: Mobile standalone
-    if (d['grl-mobile']) f += '<div style="font-size:8pt; color:#ffffff; line-height:1.6; white-space:nowrap; margin-top:10px;"><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
-    // Row 2: Office+Email left, address right
-    f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:2px;">';
-    // Left: office + email (flexible, truncates if needed)
+    // Contact left + address right, top-aligned
+    f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
+    // Left: Mobile, Office, Email stacked
     f += '<div style="font-size:8pt; color:#ffffff; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
-    if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
-    if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
+    if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:34px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
+    if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:34px;">Office</span> '+esc(d['grl-office'])+'</div>';
+    if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:34px;">Email</span> '+esc(d['grl-email'])+'</div>';
     f += '</div>';
-    // Right: address with red dash (fixed width, never pushed)
+    // Right: address (fixed width, top-aligned with Mobile)
     f += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:0 0 180px;">';
     f += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
     f += '<div style="font-weight:bold; white-space:nowrap;">'+esc(loc.company)+'</div>';
@@ -592,16 +591,15 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     b += '<div style="font-size:16pt; font-weight:bold; color:'+NAVY+'; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
     if (d['grl-designation']) b += '<div style="font-size:9pt; color:#555; margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
     b += '</div>';
-    // Row 1: Mobile standalone
-    if (d['grl-mobile']) b += '<div style="font-size:8pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap; margin-top:10px;"><span style="font-weight:bold; display:inline-block; width:48px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
-    // Row 2: Office+Email left, address right
-    b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:2px;">';
-    // Left: office + email (flexible, truncates if needed)
+    // Contact left + address right, top-aligned
+    b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
+    // Left: Mobile, Office, Email stacked
     b += '<div style="font-size:8pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
-    if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Office</span> '+esc(d['grl-office'])+'</div>';
-    if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:48px;">Email</span> '+esc(d['grl-email'])+'</div>';
+    if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:34px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
+    if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:34px;">Office</span> '+esc(d['grl-office'])+'</div>';
+    if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:34px;">Email</span> '+esc(d['grl-email'])+'</div>';
     b += '</div>';
-    // Right: address with red dash (fixed width, never pushed)
+    // Right: address (fixed width, top-aligned with Mobile)
     b += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:0 0 180px;">';
     b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
     b += '<div style="font-weight:bold; white-space:nowrap;">'+esc(loc.company)+'</div>';
