@@ -566,10 +566,10 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
     // Left: Mobile, Office, Email stacked
     f += '<div style="font-size:7pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
-    if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
-    if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Office</span> '+esc(d['grl-office'])+'</div>';
-    if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Email</span> '+esc(d['grl-email'])+'</div>';
-    if (d['grl-location'] === 'taiwan' && d['grl-taxid']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
+    if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
+    if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Office</span> '+esc(d['grl-office'])+'</div>';
+    if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Email</span> '+esc(d['grl-email'])+'</div>';
+    if (d['grl-location'] === 'taiwan' && d['grl-taxid']) f += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
     f += '</div>';
     // Right: address (fixed width, top-aligned with Mobile)
     f += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:0 0 180px;">';
@@ -602,10 +602,10 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
     // Left: Mobile, Office, Email stacked
     b += '<div style="font-size:8pt; color:#ffffff; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
-    if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
-    if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Office</span> '+esc(d['grl-office'])+'</div>';
-    if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Email</span> '+esc(d['grl-email'])+'</div>';
-    if (d['grl-location'] === 'taiwan' && d['grl-taxid']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
+    if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
+    if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Office</span> '+esc(d['grl-office'])+'</div>';
+    if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Email</span> '+esc(d['grl-email'])+'</div>';
+    if (d['grl-location'] === 'taiwan' && d['grl-taxid']) b += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
     b += '</div>';
     // Right: local address (fixed width, top-aligned with Mobile)
     b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:0 0 180px;">';
