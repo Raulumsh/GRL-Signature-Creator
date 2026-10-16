@@ -298,9 +298,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     },
     'taiwan': {
       label: 'Taiwan',
-      company: 'Granite River Labs Asia Pacific Pte. Ltd.',
+      company: 'Granite River Labs Asia Pacific Pte. Ltd., Taiwan Branch',
       localCompany: '新加坡商技流創新有限公司台灣分公司',
-      lines: ['Taiwan Branch','5F., No. 489, Sec. 2, Tiding Blvd., Neihu Dist.','Taipei City 11493, Taiwan'],
+      lines: ['5F., No. 489, Sec. 2, Tiding Blvd., Neihu Dist., Taipei City 11493, Taiwan'],
       localLines: ['11493 台北市內湖區堤頂大道二段489號5F'],
       phone: '',
       links: 'graniteriverlabs.com/zh-tw/   •   linkedin.com/graniteriverlabs'
@@ -335,9 +335,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     'belgium': {
       label: 'Belgium',
       company: 'Granite River Labs Belgium BV',
-      localCompany: 'Granite River Labs Belgium BV',
+      localCompany: '',
       lines: ['Rootenstraat 25 - PO Box 11; 3600 Genk, Belgium'],
-      localLines: ['Rootenstraat 25 - PO Box 11; 3600 Genk, Belgium'],
+      localLines: [],
       phone: '+32 (0) 479 798 491',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     },
@@ -362,9 +362,9 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     'india': {
       label: 'India',
       company: 'Granite River Labs India Services Private Limited',
-      localCompany: 'Granite River Labs India Services Private Limited',
+      localCompany: '',
       lines: ['Unit No. 10, 1st Floor, ROACH ICON (RBD Icon),', 'Survey No. 28 & 36/5, Outer Ring Road,', 'Doddanekundi, K R Puram Hobli,', 'Bengaluru 560037, India'],
-      localLines: ['Unit No. 10, 1st Floor, ROACH ICON (RBD Icon),', 'Survey No. 28 & 36/5, Outer Ring Road,', 'Doddanekundi, K R Puram Hobli,', 'Bengaluru 560037, India'],
+      localLines: [],
       phone: '+91 80-2990 0533',
       links: 'graniteriverlabs.com   •   linkedin.com/graniteriverlabs'
     }
@@ -469,7 +469,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (langMode === 'local') {
       // Local language only — fall back to English if no local version
       var cName = loc.localCompany || loc.company;
-      h += '<div style="font-family:Arial,\'Microsoft JhengHei\',\'Microsoft YaHei\',\'PingFang TC\',\'Noto Sans CJK TC\',sans-serif; font-weight:bold;">'+esc(cName)+'</div>';
+      h += '<div style="font-weight:bold;">'+esc(cName)+'</div>';
       var aLines = loc.localLines.length ? loc.localLines : loc.lines;
       aLines.forEach(function(line) { h += '<div>'+esc(line)+'</div>'; });
     } else {
@@ -566,10 +566,10 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
     // Left: Mobile, Office, Email stacked
     f += '<div style="font-size:7pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
-    if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
-    if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Office</span> '+esc(d['grl-office'])+'</div>';
-    if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Email</span> '+esc(d['grl-email'])+'</div>';
-    if (d['grl-location'] === 'taiwan' && d['grl-taxid']) f += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
+    if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
+    if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Office</span> '+esc(d['grl-office'])+'</div>';
+    if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Email</span> '+esc(d['grl-email'])+'</div>';
+    if (d['grl-location'] === 'taiwan' && d['grl-taxid']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
     f += '</div>';
     // Right: address (fixed width, top-aligned with Mobile)
     f += '<div style="font-size:5.6pt; color:#666; line-height:1.5; text-align:right; flex:0 0 180px;">';
@@ -583,39 +583,46 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     // ── BACK (dark navy) ──
     var b = '<div style="'+cs+' background:'+NAVY+'; border:1.5px solid #0a2a6e;">';
     b += '<img src="'+CARD_CIRCUIT_DARK+'" style="position:absolute; top:0; right:0; height:100%; opacity:0.5; pointer-events:none;">';
-    b += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
-    // Top row: logo left, QR right
-    b += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
-    b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
-    b += '<img src="'+CARD_QR+'" alt="QR" width="68" height="68" style="display:block; border:0; border-radius:4px;">';
+    var hasLocal = loc.localCompany && loc.localCompany !== loc.company;
+    if (hasLocal) {
+      // Full back card with local language content
+      b += '<div style="position:relative; z-index:1; padding:20px 22px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">';
+      // Top row: logo left, QR right
+      b += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
+      b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="56" style="display:block; border:0;">';
+      b += '<img src="'+CARD_QR+'" alt="QR" width="68" height="68" style="display:block; border:0; border-radius:4px;">';
+      b += '</div>';
+      // Name + Title (use local language if provided)
+      var backName = d['grl-name-local'] || d.name;
+      var backTitle = d['grl-title-local'] || d['grl-designation'];
+      b += '<div>';
+      b += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(backName)+'</div>';
+      if (backTitle) b += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(backTitle)+'</div>';
+      b += '</div>';
+      // Contact left + address right (LOCAL language), top-aligned
+      var backCompany = loc.localCompany;
+      var backAddr = loc.localLines.length ? loc.localLines : loc.lines;
+      b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
+      b += '<div style="font-size:7pt; color:#ffffff; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
+      if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
+      if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Office</span> '+esc(d['grl-office'])+'</div>';
+      if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Email</span> '+esc(d['grl-email'])+'</div>';
+      if (d['grl-location'] === 'taiwan' && d['grl-taxid']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
+      b += '</div>';
+      b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:0 0 180px;">';
+      b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
+      b += '<div style="font-weight:bold; white-space:nowrap;">'+esc(backCompany)+'</div>';
+      backAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
+      b += '</div>';
+      b += '</div>';
+      b += '</div>';
+    } else {
+      // English-only office: centered logo only
+      b += '<div style="position:relative; z-index:1; height:100%; display:flex; align-items:center; justify-content:center;">';
+      b += '<img src="'+CARD_LOGO_WHITE+'" alt="GRL by SGS" height="72" style="display:block; border:0;">';
+      b += '</div>';
+    }
     b += '</div>';
-    // Name + Title (use local language if provided)
-    var backName = d['grl-name-local'] || d.name;
-    var backTitle = d['grl-title-local'] || d['grl-designation'];
-    b += '<div>';
-    b += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(backName)+'</div>';
-    if (backTitle) b += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(backTitle)+'</div>';
-    b += '</div>';
-    // Contact left + address right (LOCAL language), top-aligned
-    var backCompany = loc.localCompany || loc.company;
-    var backAddr = loc.localLines.length ? loc.localLines : loc.lines;
-    b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
-    // Left: Mobile, Office, Email stacked
-    b += '<div style="font-size:7pt; color:#ffffff; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
-    if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
-    if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Office</span> '+esc(d['grl-office'])+'</div>';
-    if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Email</span> '+esc(d['grl-email'])+'</div>';
-    if (d['grl-location'] === 'taiwan' && d['grl-taxid']) b += '<div><span style="font-weight:bold; display:inline-block; width:3.8em;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
-    b += '</div>';
-    // Right: local address (fixed width, top-aligned with Mobile)
-    b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:0 0 180px;">';
-    b += '<div style="width:28px; height:3px; background:#e74c3c; margin-bottom:4px; border-radius:1px; margin-left:auto;"></div>';
-    // CJK fonts with a real bold weight, so local company names render bold (Arial has no CJK glyphs)
-    b += '<div style="font-family:Arial,\'Microsoft JhengHei\',\'Microsoft YaHei\',\'PingFang TC\',\'Noto Sans CJK TC\',sans-serif; font-weight:bold; color:#ffffff; white-space:nowrap;">'+esc(backCompany)+'</div>';
-    backAddr.forEach(function(line) { b += '<div>'+esc(line)+'</div>'; });
-    b += '</div>';
-    b += '</div>';
-    b += '</div></div>';
 
     // Wrap both
     var h = '<div style="display:flex; flex-direction:column; align-items:center; gap:20px;">';
