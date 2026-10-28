@@ -562,8 +562,12 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     f += '<div style="font-size:16pt; font-weight:bold; color:'+NAVY+'; letter-spacing:0.01em;">'+esc(d.name)+'</div>';
     if (d['grl-designation']) f += '<div style="font-size:9pt; color:#555; margin-top:-1px;">'+esc(d['grl-designation'])+'</div>';
     f += '</div>';
+    // Red dash above address box
+    f += '<div style="display:flex; justify-content:flex-end; margin-top:10px;">';
+    f += '<div style="width:28px; height:3px; background:#e74c3c; border-radius:1px; flex:0 0 auto; margin-bottom:4px;"></div>';
+    f += '</div>';
     // Contact left + address right, top-aligned
-    f += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
+    f += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
     // Left: Mobile, Office, Email stacked
     f += '<div style="font-size:7pt; color:'+NAVY+'; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
     if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
@@ -598,10 +602,14 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       b += '<div style="font-size:16pt; font-weight:bold; color:#ffffff; letter-spacing:0.01em;">'+esc(backName)+'</div>';
       if (backTitle) b += '<div style="font-size:9pt; color:rgba(255,255,255,0.75); margin-top:-1px;">'+esc(backTitle)+'</div>';
       b += '</div>';
+      // Red dash above address box
+      b += '<div style="display:flex; justify-content:flex-end; margin-top:10px;">';
+      b += '<div style="width:28px; height:3px; background:#e74c3c; border-radius:1px; flex:0 0 auto; margin-bottom:4px;"></div>';
+      b += '</div>';
       // Contact left + address right (LOCAL language), top-aligned
       var backCompany = loc.localCompany;
       var backAddr = loc.localLines.length ? loc.localLines : loc.lines;
-      b += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">';
+      b += '<div style="display:flex; justify-content:space-between; align-items:flex-start;">';
       b += '<div style="font-size:7pt; color:#ffffff; line-height:1.6; white-space:nowrap; flex:1 1 auto; min-width:0; overflow:hidden;">';
       if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
       if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Office</span> '+esc(d['grl-office'])+'</div>';
