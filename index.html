@@ -129,6 +129,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
         <div class="form-grid">
           <div class="field full"><label>Job title / Designation</label><input id="f-grl-designation" type="text" placeholder="Director of Engineering"></div>
           <div class="field full"><label>Email</label><input id="f-grl-email" type="email" placeholder="anne.tsou@graniteriverlabs.com"></div>
+          <div class="field full"><label>Alternate Email</label><input id="f-grl-altemail" type="email" placeholder="anne.tsou@sgs.com"></div>
           <div class="field full"><label>Website</label><input id="f-grl-website" type="text" value="graniteriverlabs.com"></div>
           <div class="field full" id="taxid-field" style="display:none;"><label>Tax ID (統一編號)</label><input id="f-grl-taxid" type="text" placeholder="e.g. 54921218"></div>
         </div>
@@ -380,7 +381,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
   var langMode = 'en'; // 'en' or 'local'
 
   var inputIds = ['name','bu','jobtitle','company','addr1','addr2','phone','mobile','fax','email','regulatory',
-                  'grl-office','grl-mobile','grl-links','grl-designation','grl-email','grl-website','grl-title','grl-name-local','grl-title-local','grl-taxid'];
+                  'grl-office','grl-mobile','grl-links','grl-designation','grl-email','grl-altemail','grl-website','grl-title','grl-name-local','grl-title-local','grl-taxid'];
   var inputs = {};
   inputIds.forEach(function(f) { inputs[f] = $('f-' + f); });
 
@@ -573,6 +574,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
     if (d['grl-mobile']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
     if (d['grl-office']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Office</span> '+esc(d['grl-office'])+'</div>';
     if (d['grl-email']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Email</span> '+esc(d['grl-email'])+'</div>';
+    if (d['grl-altemail']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;"></span> '+esc(d['grl-altemail'])+'</div>';
     if (d['grl-location'] === 'taiwan' && d['grl-taxid']) f += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
     f += '</div>';
     // Right: address (fixed width, top-aligned with Mobile)
@@ -614,6 +616,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       if (d['grl-mobile']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Mobile</span> '+esc(d['grl-mobile'])+'</div>';
       if (d['grl-office']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Office</span> '+esc(d['grl-office'])+'</div>';
       if (d['grl-email']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Email</span> '+esc(d['grl-email'])+'</div>';
+      if (d['grl-altemail']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;"></span> '+esc(d['grl-altemail'])+'</div>';
       if (d['grl-location'] === 'taiwan' && d['grl-taxid']) b += '<div><span style="font-weight:bold; display:inline-block; width:30px;">Tax ID</span> '+esc(d['grl-taxid'])+'</div>';
       b += '</div>';
       b += '<div style="font-size:5.6pt; color:rgba(255,255,255,0.7); line-height:1.5; text-align:right; flex:0 0 180px;">';
