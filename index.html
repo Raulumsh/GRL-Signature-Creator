@@ -801,8 +801,8 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
         creator: 'GRL Signature & Card Creator'
       });
 
-      // Render at 4x scale (~300 DPI at card size)
-      var renderOpts = { scale: 4, useCORS: true, backgroundColor: null, logging: false };
+      // Render at 8x scale for ~700 DPI — crisp text even at small pt sizes
+      var renderOpts = { scale: 8, useCORS: true, backgroundColor: null, logging: false };
 
       var cards = preview.querySelectorAll('div[style*="border-radius:8px"]');
       var cardFront = cards[0] || null;
@@ -861,7 +861,7 @@ html, body { background: var(--bg); color: var(--text); font-family: -apple-syst
       var specs = [
         ['Card size:', '3.5 × 2 inches (89 × 51 mm) — standard US business card'],
         ['Bleed:', '0.125 inches (3.175 mm) on all sides'],
-        ['Resolution:', '300 DPI (rendered at 4× scale)'],
+        ['Resolution:', '700+ DPI (rendered at 8× scale)'],
         ['Corners:', '8px radius (rounded)'],
         ['', ''],
         ['CMYK Color Values:', ''],
